@@ -1,0 +1,9 @@
+; $Id: 
+name = audiofield
+description = "This Modul is for uploading and playing audio."
+core = 6.x
+dependencies[] = filefield
+package = CCK
+
+stylesheets[all][] = style.css
+
