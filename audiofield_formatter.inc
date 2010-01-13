@@ -6,6 +6,11 @@
 function theme_audiofield_formatter_audiofield_embedded($element) {
 global $base_path;
 
+//Don't render player if there is no file.
+  if (!$element['#item']['filepath']) {
+    return '';
+  }
+
 $player=variable_get('audiofield_audioplayer', '0');
 
   if ($player==0) {
