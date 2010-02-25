@@ -1,6 +1,6 @@
 ; $Id: 
 name = audiofield
-description = "This Modul is for uploading and playing audio."
+description = "Adds audio widget for uploading and playing audio files."
 core = 6.x
 dependencies[] = filefield
 package = CCK
