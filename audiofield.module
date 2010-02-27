@@ -41,11 +41,7 @@ function audiofield_admin_settings_form() {
     '#description' => t('Enter the audio extension seperated by coma , By default, the audio extension is mp3 '),
     '#default_value' => variable_get('audiofield_extension', 'mp3')
   );
-  
-  if (variable_get('audiofield_maximum_size', '50' )=="") {
-    variable_set('audiofield_maximum_size', '50' );
-  }
-  
+   
   $form['audiofield_maximum_size']=array(
     '#type' => 'textfield',
     '#title' => t('The Maximume size'),
