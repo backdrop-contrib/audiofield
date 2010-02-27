@@ -49,7 +49,7 @@ function audiofield_admin_settings_form() {
   $form['audiofield_maximum_size']=array(
     '#type' => 'textfield',
     '#title' => t('The Maximume size'),
-    '#description' => t(' The maximum size is ' . variable_get('audiofield_maximum_size', '50') . ', By defult 50 MB.'),
+    '#description' => t(' The maximum size is ' . variable_get('audiofield_maximum_size', '50') . ', By default 50 MB.'),
     '#default_value' => variable_get('audiofield_maximum_size', '50' )
   );
   
