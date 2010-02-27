@@ -32,9 +32,6 @@ function audiofield_menu() {
 function audiofield_admin_settings_form() {
   global $base_path;
   
-  if (variable_get('audiofield_extension', 'mp3')=="") {
-    variable_set('audiofield_extension', 'mp3' ); 
-  }
   $form['audiofield_extension'] = array(
     '#type' => 'textfield',
     '#title' => t('Audio Extension'),
