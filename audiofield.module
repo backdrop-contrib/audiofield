@@ -39,13 +39,6 @@ function audiofield_admin_settings_form() {
     '#default_value' => variable_get('audiofield_extension', 'mp3')
   );
    
-  $form['audiofield_maximum_size']=array(
-    '#type' => 'textfield',
-    '#title' => t('The Maximume size'),
-    '#description' => t(' The maximum size is ' . variable_get('audiofield_maximum_size', '50') . ', By default 50 MB.'),
-    '#default_value' => variable_get('audiofield_maximum_size', '50' )
-  );
-  
     $player1=realpath("sites") . "/all/libraries/player/audio-player/player.swf";
     $player2=realpath("sites") . "/all/libraries/player/xspf_player_slim.swf";
     $player3=realpath("sites") . "/all/libraries/player/playerSinglePackage/playerSingle.swf";
