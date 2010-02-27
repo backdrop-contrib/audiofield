@@ -20,7 +20,7 @@ function audiofield_menu() {
   
   $items['admin/settings/audiofield'] = array(
     'title' => 'Audio Field',
-    'description' => 'Configure audiofield.',
+    'description' => 'Configure Audiofield.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('audiofield_admin_settings_form'),
     'access arguments' => array('administer site configuration'),
@@ -35,7 +35,7 @@ function audiofield_admin_settings_form() {
   $form['audiofield_extension'] = array(
     '#type' => 'textfield',
     '#title' => t('Audio Extension'),
-    '#description' => t('Enter the audio extension seperated by coma , By default, the audio extension is mp3 '),
+    '#description' => t('Enter the audio extension seperated by coma. By default, the audio extension is mp3 '),
     '#default_value' => variable_get('audiofield_extension', 'mp3')
   );
    
