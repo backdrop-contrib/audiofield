@@ -89,8 +89,6 @@ function audiofield_admin_settings_form() {
       '#default_value' => variable_get('audiofield_audioplayer', '0')
     );
     
-    $form['#validate'][] ="_uc_return_order_validate";
-    
     return system_settings_form($form);
 }
 
