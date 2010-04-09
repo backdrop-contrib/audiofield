@@ -9,7 +9,7 @@ In order to activate this module you have to get its audio players from the foll
 3. http://www.premiumbeat.com/flash_resources/free_flash_music_player/single_track_flash_mp3_player.php
 
 Once you got the above audio players you have to create a new folder at this 
-directory "\sites\all\libraries\" and name it as "player". now you can unzip 
+directory "sites/all/libraries/player" and name it as "player". now you can unzip 
 the audio players directly into the "player" folder.
 
 This module gives you the ability to choose the audio player you would like to 
