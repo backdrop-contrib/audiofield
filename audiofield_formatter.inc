@@ -16,7 +16,7 @@ $player=variable_get('audiofield_audioplayer', '0');
   if ($player==0) {
     $output='<object id="audioplayer2" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
              <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
-             <param value="playerID=2&bg=0xCDDFF3&leftbg=0x357DCE&lefticon=0xF2F2F2&rightbg=0xF06A51&rightbghover=0xAF2910&righticon=0xF2F2F2&righticonhover=0xFFFFFF&text=0x357DCE&slider=0x357DCE&track=0xFFFFFF&border=0xFFFFFF&loader=0xAF2910&soundFile=' . $base_path . $element['#item']['filepath'] . '" name="FlashVars"/>
+             <param value="playerID=2&amp;bg=0xCDDFF3&amp;leftbg=0x357DCE&amp;lefticon=0xF2F2F2&amp;rightbg=0xF06A51&amp;rightbghover=0xAF2910&amp;righticon=0xF2F2F2&amp;righticonhover=0xFFFFFF&amp;text=0x357DCE&amp;slider=0x357DCE&amp;track=0xFFFFFF&amp;border=0xFFFFFF&amp;loader=0xAF2910&amp;soundFile=' . $base_path . $element['#item']['filepath'] . '" name="FlashVars"/>
              <param value="high" name="quality"/>
              <param value="false" name="menu"/>
              <param value="#FFFFFF" name="bgcolor"/></object>';
@@ -24,7 +24,7 @@ $player=variable_get('audiofield_audioplayer', '0');
   elseif ($player==1) {
     $output='<object id="audioplayer1" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
              <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
-             <param value="playerID=1&bg=0xf8f8f8&leftbg=0xeeeeee&lefticon=0x666666&rightbg=0xcccccc&rightbghover=0x999999&righticon=0x666666&righticonhover=0xFFFFFF&text=0x666666&slider=0x666666&track=0xFFFFFF&border=0x666666&loader=0x9FFFB8&soundFile=' . $base_path . $element['#item']['filepath'] . '" name="FlashVars"/>
+             <param value="playerID=1&amp;bg=0xf8f8f8&amp;leftbg=0xeeeeee&amp;lefticon=0x666666&amp;rightbg=0xcccccc&amp;rightbghover=0x999999&amp;righticon=0x666666&amp;righticonhover=0xFFFFFF&amp;text=0x666666&amp;slider=0x666666&amp;track=0xFFFFFF&amp;border=0x666666&amp;loader=0x9FFFB8&amp;soundFile=' . $base_path . $element['#item']['filepath'] . '" name="FlashVars"/>
              <param value="high" name="quality"/>
              <param value="false" name="menu"/>
              <param value="#FFFFFF" name="bgcolor"/></object>';
