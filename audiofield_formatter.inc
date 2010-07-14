@@ -13,7 +13,13 @@ global $base_path;
 
 $player=variable_get('audiofield_audioplayer', 0);
 
-  if ($player==0) {
+  if($player=='flowplayer'){
+   $output = theme('flowplayer', $base_path . $element['#item']['filepath'], 'audiofield', array(
+             'style' => 'height: 24px',
+			 ));
+  }
+  elseif ($player==0) {
+  
     $output='<object id="audioplayer2" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
              <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
              <param value="playerID=2&amp;bg=0xCDDFF3&amp;leftbg=0x357DCE&amp;lefticon=0xF2F2F2&amp;rightbg=0xF06A51&amp;rightbghover=0xAF2910&amp;righticon=0xF2F2F2&amp;righticonhover=0xFFFFFF&amp;text=0x357DCE&amp;slider=0x357DCE&amp;track=0xFFFFFF&amp;border=0xFFFFFF&amp;loader=0xAF2910&amp;soundFile=' . $base_path . $element['#item']['filepath'] . '" name="FlashVars"/>
@@ -34,6 +40,7 @@ $player=variable_get('audiofield_audioplayer', 0);
                flashvars="soundPath=' . $base_path . $element['#item']['filepath'] . '" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
               </embed></object>';
   }
+  
  
   return $output;
 }

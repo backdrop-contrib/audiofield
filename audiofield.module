@@ -61,6 +61,12 @@ function audiofield_admin_settings_form() {
                           </embed>
                           </object>';
     }
+	
+	//Flowplayer support by Rob Loach
+	if (module_exists('flowplayer')) {
+      $players['flowplayer'] = t('Flowplayer');
+    }
+
     $form['audiofield_audioplayer'] = array(
       '#type' => 'radios',
       '#title' => t('Audio Player'),
