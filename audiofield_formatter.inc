@@ -28,7 +28,7 @@ $player=variable_get('audiofield_audioplayer', 0);
              <param value="wmode" name="transparent"/></object>';
   }
   elseif ($player==1) {
-     $output='<object type="application/x-shockwave-flash" width="200" height="170"
+     $output='<object type="application/x-shockwave-flash"  width="175" height="14"
               data="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path . $element['#item']['filepath'] . '">
              <param name="movie" value="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path . $element['#item']['filepath'] . '" />
              </object>';
