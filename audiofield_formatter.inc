@@ -36,7 +36,7 @@ $player=variable_get('audiofield_audioplayer', 0);
   elseif ($player==2) {
    $output ='<object><param name="autoplay" value="true" />
               <param name="controller"value="true" /> 
-              <embed src="' . $base_path . 'sites/all/libraries/player/playerSinglePackage/playerSingle.swf"  width="175" height="80" float="left" wmode="transparent" 
+              <embed src="' . $base_path . 'sites/all/libraries/player/playerSinglePackage/playerSingle.swf"  width="192" height="80" float="left" wmode="transparent" 
                flashvars="soundPath=' . $base_path . $element['#item']['filepath'] . '" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
               </embed></object>';
   }
