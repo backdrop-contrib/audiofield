@@ -1,4 +1,4 @@
-VIDEOFIELD.MODULE
+AUDIOFIELD.MODULE
 --------------------------------------------------------------------------------
 This module allows embedding an audio file in a CCK field
 This module is for adding new field that allows embedding an mp3 audio.
@@ -22,5 +22,5 @@ to test all audio players before you choose your default audio player
 MAINTAINERS
 --------------------------------------------------------------------------------
 Tamer Zoubi - <tamerzg@gmail.com>
-Othman Adarbeh - <othman.adarbeh@web2make.com>
+
 
