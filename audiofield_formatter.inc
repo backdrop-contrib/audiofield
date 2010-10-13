@@ -4,45 +4,24 @@
  * Theme function for 'embedded' audio.
  */
 function theme_audiofield_formatter_audiofield_embedded($element) {
-global $base_path;
-
+global $user;
 //Don't render player if there is no file.
   if (!$element['#item']['filepath']) {
     return '';
   }
 
-$player=variable_get('audiofield_audioplayer', 0);
-
-  if($player=='flowplayer'){
-   $output = theme('flowplayer', $base_path . $element['#item']['filepath'], 'audiofield', array(
-             'style' => 'height: 24px',
-			 ));
-  }
-  elseif ($player==0) {
-  
-    $output='<object id="audioplayer2" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
-             <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
-             <param value="playerID=2&amp;bg=0xCDDFF3&amp;leftbg=0x357DCE&amp;lefticon=0xF2F2F2&amp;rightbg=0xF06A51&amp;rightbghover=0xAF2910&amp;righticon=0xF2F2F2&amp;righticonhover=0xFFFFFF&amp;text=0x357DCE&amp;slider=0x357DCE&amp;track=0xFFFFFF&amp;border=0xFFFFFF&amp;loader=0xAF2910&amp;soundFile=' . $base_path . $element['#item']['filepath'] . '" name="FlashVars"/>
-             <param value="high" name="quality"/>
-             <param value="false" name="menu"/>
-             <param value="wmode" name="transparent"/></object>';
-  }
-  elseif ($player==1) {
-     $output='<object type="application/x-shockwave-flash"  width="175" height="14"
-              data="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path . $element['#item']['filepath'] . '">
-             <param name="movie" value="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path . $element['#item']['filepath'] . '" />
-             </object>';
-  }
-  elseif ($player==2) {
-   $output ='<object><param name="autoplay" value="true" />
-              <param name="controller"value="true" /> 
-              <embed src="' . $base_path . 'sites/all/libraries/player/playerSinglePackage/playerSingle.swf"  width="192" height="80" float="left" wmode="transparent" 
-               flashvars="soundPath=' . $base_path . $element['#item']['filepath'] . '" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
-              </embed></object>';
-  }
-  
- 
-  return $output;
+	$output= _audiofield_get_player($element);
+	
+	//If user is file owner check for download permission and display download link
+	if($user->uid==$element['#item']['uid'] && user_access('download own audio files')){
+	   $output.='<div class="audio-download"><b>Download:</b>'.theme('filefield_file', $element['#item']).'</div>';
+    }
+	elseif(user_access('download all audio files')){
+	//If user has permission to download all audio files, then display download link
+		$output.='<div class="audio-download"><b>Download:</b>'.theme('filefield_file', $element['#item']).'</div>';
+	}
+   
+   return $output;
 }
 
 /** 
@@ -103,4 +82,59 @@ function theme_audiofield_file($file) {
   }
 
   return '<div class="filefield-file clear-block">'. $icon . l($link_text, $url, $options) .'</div>';
+}
+
+/**
+ * Get the object for the suitable player for the parameter resource
+*/
+function _audiofield_get_player($element) {
+  $info = pathinfo($element['#item']['filename']);
+  $op=$info['extension'];
+  
+  switch ($op) {
+    case 'mp3':
+      return theme('audiofield_play_mp3', $element);
+    case 'wav':
+      return theme('videofield_play_quicktime', $element);
+
+    default:
+      drupal_set_message('No audio player for ' .$op, 'error');
+      break;
+  }
+}
+
+function theme_audiofield_play_mp3($element){
+global $base_path;
+$player=variable_get('audiofield_audioplayer', 0);
+
+  if($player=='flowplayer'){
+   $output = theme('flowplayer', $base_path . $element['#item']['filepath'], 'audiofield', array(
+             'style' => 'height: 24px',
+			 ));
+  }
+  elseif ($player==0) {
+  
+    $output='<object id="audioplayer2" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
+             <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
+             <param value="playerID=2&amp;bg=0xCDDFF3&amp;leftbg=0x357DCE&amp;lefticon=0xF2F2F2&amp;rightbg=0xF06A51&amp;rightbghover=0xAF2910&amp;righticon=0xF2F2F2&amp;righticonhover=0xFFFFFF&amp;text=0x357DCE&amp;slider=0x357DCE&amp;track=0xFFFFFF&amp;border=0xFFFFFF&amp;loader=0xAF2910&amp;soundFile=' . $base_path . $element['#item']['filepath'] . '" name="FlashVars"/>
+             <param value="high" name="quality"/>
+             <param value="false" name="menu"/>
+             <param value="wmode" name="transparent"/></object>';
+  }
+  elseif ($player==1) {
+     $output='<object type="application/x-shockwave-flash"  width="175" height="14"
+              data="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path . $element['#item']['filepath'] . '">
+             <param name="movie" value="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path . $element['#item']['filepath'] . '" />
+             </object>';
+  }
+  elseif ($player==2) {
+   $output ='<object><param name="autoplay" value="true" />
+              <param name="controller"value="true" /> 
+              <embed src="' . $base_path . 'sites/all/libraries/player/playerSinglePackage/playerSingle.swf"  width="192" height="80" float="left" wmode="transparent" 
+               flashvars="soundPath=' . $base_path . $element['#item']['filepath'] . '" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+              </embed></object>';
+  }
+  
+ 
+  return $output;
 }

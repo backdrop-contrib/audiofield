@@ -23,6 +23,13 @@ function audiofield_menu() {
       return $items;
 }
 
+/**
+ * Implementation of hook_perm().
+ */
+ function audiofield_perm() {
+  return array('download own audio files','download all audio files');
+}
+
 function audiofield_admin_settings_form() {
   global $base_path;
   
@@ -124,6 +131,11 @@ function audiofield_theme() {
       'audiofield_formatter_audiofield_embedded' => array(
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_formatter.inc',
+      ),
+	  //Theme for the players
+	   'audiofield_play_mp3' => array(
+      'arguments' => array('element' => NULL),
+      'file' => 'common.inc',
       ),
   );
 
