@@ -19,6 +19,24 @@ Finally you have to put any mp3 audio file at "\sites\all\libraries\player\"
 and you have to name it as Sample_Track.mp3, this step just to gives the ability
 to test all audio players before you choose your default audio player 
 
+SUPPORTED FILE FORMATS:
+Originally this module supports only mp3 audio files. But other modules can extend this by implementing theme_audiofield_play_FILE-EXTENSION() 
+in their modules. For example to implement support for wav files you should register audiofield_play_wav from your module hook_theme :
+
+function YOURMODULENAME_field_theme() {
+  $theme = array('audiofield_play_wav' => array(
+      'arguments' => array('element' => NULL),
+  ));
+  return $theme;
+}
+
+and then you can render your player through:
+
+function theme_audiofield_play_wav($element){
+	$output="CODE FOR WAV PLAYER"';
+	return $output;
+}
+
 MAINTAINERS
 --------------------------------------------------------------------------------
 Tamer Zoubi - <tamerzg@gmail.com>
