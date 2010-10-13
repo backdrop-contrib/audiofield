@@ -94,11 +94,10 @@ function _audiofield_get_player($element) {
   switch ($op) {
     case 'mp3':
       return theme('audiofield_play_mp3', $element);
-    case 'wav':
-      return theme('videofield_play_quicktime', $element);
-
     default:
-      drupal_set_message('No audio player for ' .$op, 'error');
+	  /* Let other modules implement players for the various extensions. For example to implement a player for wav files, other module
+	  would just need to create audiofield_play_wav theme function */
+	  return theme('audiofield_play_'.$op, $element);
       break;
   }
 }

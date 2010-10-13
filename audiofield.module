@@ -135,7 +135,7 @@ function audiofield_theme() {
 	  //Theme for the players
 	   'audiofield_play_mp3' => array(
       'arguments' => array('element' => NULL),
-      'file' => 'common.inc',
+      'file' => 'audiofield_formatter.inc',
       ),
   );
 
