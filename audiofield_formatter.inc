@@ -133,6 +133,23 @@ $player=variable_get('audiofield_audioplayer', 0);
                flashvars="soundPath=' . $base_path . $element['#item']['filepath'] . '" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
               </embed></object>';
   }
+   elseif ($player==3) {				  
+		$output ='<object><param name="autoplay" value="true" />
+				<param name="controller"value="true" /> 
+				<embed src="' . $base_path . 'sites/all/libraries/player/OriginalThinMusicPlayer.swf"  width="220" height="21" float="left" wmode="transparent" 
+				flashvars="mediaPath=' . $base_path . $element['#item']['filepath'] . '&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+				</embed></object>';
+				  
+    }
+     elseif ($player==4) {
+					   
+		$output ='<object><param name="autoplay" value="true" />
+				<param name="controller"value="true" /> 
+				<embed src="' . $base_path . 'sites/all/libraries/player/LWMusicPlayer.swf"  width="65" height="21" float="left" wmode="transparent" 
+				flashvars="mediaPath=' . $base_path . $element['#item']['filepath'] . '&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+				</embed></object>';
+				   
+     }
   
  
   return $output;

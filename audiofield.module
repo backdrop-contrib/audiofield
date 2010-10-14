@@ -32,18 +32,13 @@ function audiofield_menu() {
 
 function audiofield_admin_settings_form() {
   global $base_path;
-  
-  $form['audiofield_extension'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Audio Extension'),
-    '#description' => t('Enter the audio extension seperated by coma. By default, the audio extension is mp3 '),
-    '#default_value' => variable_get('audiofield_extension', 'mp3')
-  );
-   
+
     $player1=realpath("sites") . "/all/libraries/player/audio-player/player.swf";
     $player2=realpath("sites") . "/all/libraries/player/xspf_player_slim.swf";
     $player3=realpath("sites") . "/all/libraries/player/playerSinglePackage/playerSingle.swf";
-    
+	$player4=realpath("sites") . "/all/libraries/player/OriginalThinMusicPlayer.swf";
+    $player5=realpath("sites") . "/all/libraries/player/LWMusicPlayer.swf";
+
     if (file_exists($player1)) {
           $players[0]='<object id="audioplayer2" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
                           <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
@@ -68,7 +63,23 @@ function audiofield_admin_settings_form() {
                           </embed>
                           </object>';
     }
-	
+	if (file_exists($player4)) {
+      $players[3]='<object>
+                          <param name="autoplay" value="true" />
+                          <param name="controller"value="true" /> 
+                          <embed src="' . $base_path . 'sites/all/libraries/player/OriginalThinMusicPlayer.swf"  width="220" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $base_path .'sites/all/libraries/player/Sample_Track.mp3&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+                          </embed>
+                          </object>';
+    }
+    if (file_exists($player5)) {
+     $players[4]='<object>
+                          <param name="autoplay" value="true" />
+                          <param name="controller"value="true" /> 
+                          <embed src="' . $base_path . 'sites/all/libraries/player/LWMusicPlayer.swf"  width="65" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $base_path .'sites/all/libraries/player/Sample_Track.mp3&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+                           </embed>
+                           </object>';
+     }
+
 	//Flowplayer support by Rob Loach
 	if (module_exists('flowplayer')) {
       $players['flowplayer'] = t('Flowplayer');
