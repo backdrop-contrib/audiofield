@@ -42,7 +42,7 @@ function audiofield_admin_settings_form() {
 	$audio_players=audiofield_players();
 	
 	foreach($audio_players as $id=>$player){
-		$player_url=$base_path.variable_get('audiofield_players_url', 'sites/all/libraries/player')."/". $player['path'];
+		$player_url=$base_path.variable_get('audiofield_players_dir', 'sites/all/libraries/player')."/". $player['path'];
 		$player_absolute_url=realpath("sites") . "/all/libraries/player/". $player['path'];
 		if (file_exists($player_absolute_url)) {
 			$players[$id]=call_user_func($player['callback'], $player_url,"");
@@ -50,7 +50,6 @@ function audiofield_admin_settings_form() {
 		else{
 			$download_players.='<li>Download '.l($player['name'],$player['download_link']).'</li>';
 		}
-		//var_dump($players);die();
 	}
 	
 	/*
@@ -101,20 +100,21 @@ function audiofield_admin_settings_form() {
     }
 	
 	if(!empty($players)){
-    $form['audiofield_audioplayer'] = array(
-      '#type' => 'radios',
-      '#title' => t('Audio Player'),
-      '#options' => $players,
-      '#default_value' => variable_get('audiofield_audioplayer', 0)
-    );
+		$form['audiofield_audioplayer'] = array(
+		  '#type' => 'radios',
+		  '#title' => t('Audio Player'),
+		  '#options' => $players,
+		  '#default_value' => variable_get('audiofield_audioplayer', 0)
+		);
     }
 	
-	$form['audiofield_players_url'] = array(
+	$form['audiofield_players_dir'] = array(
       '#type' => 'textfield',
-      '#title' => t('Audio Player URL'),
-      '#options' => $players,
-      '#default_value' => variable_get('audiofield_players_url', 'sites/all/libraries/player'),
+      '#title' => t('Audio Players Directory'),
+	  '#description' => t('Download and extract audio players in this directory'),
+      '#default_value' => variable_get('audiofield_players_dir', 'sites/all/libraries/player'),
     );
+	
 	if(!empty($download_players)){
 		$form['audiofield_downloadaudioplayer'] = array(
 		  '#type' => 'item',
@@ -284,6 +284,9 @@ function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
   }
 }
 
+/**
+ * Implementation of hook_audiofield_players().
+ */
 function audiofield_players(){
 	$players=module_invoke_all('audiofield_players');
 
@@ -328,10 +331,8 @@ function audiofield_players(){
 	);
 
 	return $players;
-
-
 }
-
+/* Audio Callback Functions */
 function audiofield_wpaudioplayer($player_path,$audio_file){
 return '<object id="audioplayer2" height="24" width="290" data="' . $player_path . '" type="application/x-shockwave-flash">
                           <param value="' . $player_path . '" name="movie"/>
