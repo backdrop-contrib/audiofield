@@ -32,13 +32,28 @@ function audiofield_menu() {
 
 function audiofield_admin_settings_form() {
   global $base_path;
-
+/*
     $player1=realpath("sites") . "/all/libraries/player/audio-player/player.swf";
     $player2=realpath("sites") . "/all/libraries/player/xspf_player_slim.swf";
     $player3=realpath("sites") . "/all/libraries/player/playerSinglePackage/playerSingle.swf";
 	$player4=realpath("sites") . "/all/libraries/player/OriginalThinMusicPlayer.swf";
     $player5=realpath("sites") . "/all/libraries/player/LWMusicPlayer.swf";
-
+*/
+	$audio_players=audiofield_players();
+	
+	foreach($audio_players as $id=>$player){
+		$player_url=$base_path.variable_get('audiofield_players_url', 'sites/all/libraries/player')."/". $player['path'];
+		$player_absolute_url=realpath("sites") . "/all/libraries/player/". $player['path'];
+		if (file_exists($player_absolute_url)) {
+			$players[$id]=call_user_func($player['callback'], $player_url,"");
+		}
+		else{
+			$download_players.='<li>Download '.l($player['name'],$player['download_link']).'</li>';
+		}
+		//var_dump($players);die();
+	}
+	
+	/*
     if (file_exists($player1)) {
           $players[0]='<object id="audioplayer2" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
                           <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
@@ -79,19 +94,35 @@ function audiofield_admin_settings_form() {
                            </embed>
                            </object>';
      }
-
+*/
 	//Flowplayer support by Rob Loach
 	if (module_exists('flowplayer')) {
       $players['flowplayer'] = t('Flowplayer');
     }
-
+	
+	if(!empty($players)){
     $form['audiofield_audioplayer'] = array(
       '#type' => 'radios',
       '#title' => t('Audio Player'),
       '#options' => $players,
       '#default_value' => variable_get('audiofield_audioplayer', 0)
     );
-    
+    }
+	
+	$form['audiofield_players_url'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Audio Player URL'),
+      '#options' => $players,
+      '#default_value' => variable_get('audiofield_players_url', 'sites/all/libraries/player'),
+    );
+	if(!empty($download_players)){
+		$form['audiofield_downloadaudioplayer'] = array(
+		  '#type' => 'item',
+		  '#title' => t('Download and install audio players'),
+		  '#value' => '<ul class="audiofield-download-players">'.$download_players.'</ul>',
+		);
+	}
+	
     return system_settings_form($form);
 }
 
@@ -130,14 +161,14 @@ function audiofield_theme() {
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_widget.inc',
       ),
-      'audiofield_item' => array(
+     /* 'audiofield_item' => array(
       'arguments' => array('file' => NULL, 'field' => NULL),
       'file' => 'audiofield_formatter.inc',
       ),
       'audiofield_file' => array(
       'arguments' => array('file' => NULL),
       'file' => 'audiofield_formatter.inc',
-      ),
+      ),*/
       // Themes for the formatters.
       'audiofield_formatter_audiofield_embedded' => array(
       'arguments' => array('element' => NULL),
@@ -208,7 +239,7 @@ function audiofield_widget(&$form, &$form_state, $field, $items, $delta = 0) {
 function audiofield_field_formatter_info() {
   $formatters = array(
     'audiofield_embedded' => array(
-      'label' => t('audiofield embedded'),
+      'label' => t('Audio'),
       'field types' => array('filefield'),
       'description' => t('Displays audio embedded in a web page.'),
     ),
@@ -251,4 +282,90 @@ function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
       content_field_instance_update($field);
     }
   }
+}
+
+function audiofield_players(){
+	$players=module_invoke_all('audiofield_players');
+
+	$players['wpaudioplayer']=array(
+		'path' => 'audio-player/player.swf',
+		'name' => 'WordPress Audio Player',
+		'download_link' => 'http://wpaudioplayer.com/download',
+		'filetypes' => 'mp3',
+		'callback' =>'audiofield_wpaudioplayer',
+	);
+	
+	$players['xspf_slim']=array(
+		'path' => 'xspf_player_slim.swf',
+		'name' => 'XSPF Slim Player',
+		'download_link' => 'http://sourceforge.net/projects/musicplayer/files/musicplayer/slim-player-0.2.3b/xspf_player_slim-correct-0.2.3.zip/download',
+		'filetypes' => 'mp3',
+		'callback' =>'audiofield_xspf_slim',
+	);
+	
+	$players['premium_beat_single_track']=array(
+		'path' => 'playerSinglePackage/playerSingle.swf',
+		'name' => 'Premium Beat Single Player',
+		'download_link' => 'http://www.premiumbeat.com/flash_resources/free_flash_music_player/single_track_flash_mp3_player.php',
+		'filetypes' => 'mp3',
+		'callback' =>'audiofield_premium_beat_single_track',
+	);
+	
+	$players['premium_beat_thin']=array(
+		'path' => 'OriginalThinMusicPlayer.swf',
+		'name' => 'Premium Beat Thin Player',
+		'download_link' => 'http://www.premiumbeat.com/flash_music_players/original/thin/',
+		'filetypes' => 'mp3',
+		'callback' =>'audiofield_premium_beat_thin',
+	);
+	
+	$players['premium_beat_mini']=array(
+		'path' => 'LWMusicPlayer.swf',
+		'name' => 'Premium Beat Mini Player',
+		'download_link' => 'http://www.premiumbeat.com/flash_music_players/original/mini/',
+		'filetypes' => 'mp3',
+		'callback' =>'audiofield_premium_beat_mini',
+	);
+
+	return $players;
+
+
+}
+
+function audiofield_wpaudioplayer($player_path,$audio_file){
+return '<object id="audioplayer2" height="24" width="290" data="' . $player_path . '" type="application/x-shockwave-flash">
+                          <param value="' . $player_path . '" name="movie"/>
+                          <param value="playerID=2&amp;bg=0xCDDFF3&amp;leftbg=0x357DCE&amp;lefticon=0xF2F2F2&amp;rightbg=0xF06A51&amp;rightbghover=0xAF2910&amp;righticon=0xF2F2F2&amp;righticonhover=0xFFFFFF&amp;text=0x357DCE&amp;slider=0x357DCE&amp;track=0xFFFFFF&amp;border=0xFFFFFF&amp;loader=0xAF2910&amp;soundFile=' . $audio_file . '" name="FlashVars"/>
+                          <param value="high" name="quality"/>
+                          <param value="false" name="menu"/>
+                          <param value="wmode" name="transparent"/>
+                          </object>';
+}
+
+function audiofield_xspf_slim($player_path,$audio_file){
+return '<object type="application/x-shockwave-flash" width="175" height="14"
+                    data="' . $player_path . '?song_url=' . $audio_file . '">
+                    <param name="movie" value="' . $player_path . '?song_url=' . $audio_file .'" />
+                    </object>';
+}
+
+function audiofield_premium_beat_single_track($player_path,$audio_file){
+return '<object><param name="autoplay" value="true" />
+                <param name="controller"value="true" /> 
+                <embed src="' . $player_path . '"  width="192" height="80" float="left" wmode="transparent" flashvars="soundPath=' . $audio_file .'" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+                </embed></object>';
+}
+
+function audiofield_premium_beat_thin($player_path,$audio_file){
+return '<object><param name="autoplay" value="true" />
+                <param name="controller"value="true" /> 
+                <embed src="' . $player_path . '"  width="220" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $audio_file .'&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+                </embed></object>';
+}
+
+function audiofield_premium_beat_mini($player_path,$audio_file){
+return '<object><param name="autoplay" value="true" />
+            <param name="controller"value="true" /> 
+            <embed src="' . $player_path . '"  width="65" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $audio_file .'&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+            </embed></object>';
 }
