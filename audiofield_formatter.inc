@@ -99,12 +99,11 @@ function _audiofield_get_player($audio_url,$op) {
     case 'mp3':
 	  $mp3_player_id=variable_get('audiofield_audioplayer', 0);
 	  $mp3_player=$audio_players[$mp3_player_id];
-	  $player_url=$base_path.variable_get('audiofield_players_dir', 'sites/all/libraries/player')."/". $mp3_player['path'];
-	  return call_user_func($mp3_player['callback'], $player_url,$audio_url);
+	  return call_user_func($mp3_player['callback'], $base_path.$mp3_player['path'],$audio_url);
     default:
-	  /* Let other modules implement players for the various extensions. For example to implement a player for wav files, other module
-	  would just need to create audiofield_play_wav theme function */
-	//  return theme('audiofield_play_'.$op, $element);
+	  $other_player_id=variable_get('audiofield_audioplayer_'.$op, 'nanogong');
+	  $other_player=$audio_players[$other_player_id];
+	  return call_user_func($other_player['callback'], $base_path.$other_player['path'],$audio_url);
       break;
   }
 }

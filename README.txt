@@ -40,22 +40,27 @@ Finally you have to put any mp3 audio file at "\sites\all\libraries\player\"
 and you have to name it as Sample_Track.mp3, this step just to gives the ability
 to test all audio players before you choose your default audio player 
 
-SUPPORTED FILE FORMATS:
-Originally this module supports only mp3 audio files. But other modules can extend this by implementing theme_audiofield_play_FILE-EXTENSION() 
+API:
+Originally this module supports only mp3 audio files. But other modules can extend this by implementing hook_audiofield_players()
 in their modules. For example to implement support for wav files you should register audiofield_play_wav from your module hook_theme :
-
-function YOURMODULENAME_field_theme() {
-  $theme = array('audiofield_play_wav' => array(
-      'arguments' => array('element' => NULL),
-  ));
-  return $theme;
+/* Example of creating additinal players through hook_audiofield_players() */
+function audiorecorderfield_audiofield_players(){
+	$players['example']=array(
+		'path' => drupal_get_path('module','example_module').'/players/player.swf', //relative path to the player
+		'name' => 'Example player',
+		'download_link' => 'http://example.com/download',
+		'filetypes' => array('mp3','wav','wma'),   //List of audio files your player can play
+		'callback' =>'example_module_example_player',
+	);
+	
+	return $players;
 }
 
-and then you can render your player through:
-
-function theme_audiofield_play_wav($element){
-	$output="CODE FOR WAV PLAYER"';
-	return $output;
+function example_module_example_player($player_path,$audio_file){
+return '<object><param name="autoplay" value="true" />
+            <param name="controller"value="true" /> 
+            <embed src="' . $player_path . '"  width="65" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $audio_file .'&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
+            </embed></object>';
 }
 
 MAINTAINERS
