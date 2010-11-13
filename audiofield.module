@@ -104,7 +104,7 @@ function audiofield_admin_settings_form() {
 		  '#type' => 'radios',
 		  '#title' => t('Audio Player'),
 		  '#options' => $players,
-		  '#default_value' => variable_get('audiofield_audioplayer', 0)
+		  '#default_value' => variable_get('audiofield_audioplayer', 0),
 		);
     }
 	
@@ -294,7 +294,7 @@ function audiofield_players(){
 		'path' => 'audio-player/player.swf',
 		'name' => 'WordPress Audio Player',
 		'download_link' => 'http://wpaudioplayer.com/download',
-		'filetypes' => 'mp3',
+		'filetypes' => array('mp3'),
 		'callback' =>'audiofield_wpaudioplayer',
 	);
 	
@@ -302,7 +302,7 @@ function audiofield_players(){
 		'path' => 'xspf_player_slim.swf',
 		'name' => 'XSPF Slim Player',
 		'download_link' => 'http://sourceforge.net/projects/musicplayer/files/musicplayer/slim-player-0.2.3b/xspf_player_slim-correct-0.2.3.zip/download',
-		'filetypes' => 'mp3',
+		'filetypes' => array('mp3'),
 		'callback' =>'audiofield_xspf_slim',
 	);
 	
@@ -310,7 +310,7 @@ function audiofield_players(){
 		'path' => 'playerSinglePackage/playerSingle.swf',
 		'name' => 'Premium Beat Single Player',
 		'download_link' => 'http://www.premiumbeat.com/flash_resources/free_flash_music_player/single_track_flash_mp3_player.php',
-		'filetypes' => 'mp3',
+		'filetypes' => array('mp3'),
 		'callback' =>'audiofield_premium_beat_single_track',
 	);
 	
@@ -318,7 +318,7 @@ function audiofield_players(){
 		'path' => 'OriginalThinMusicPlayer.swf',
 		'name' => 'Premium Beat Thin Player',
 		'download_link' => 'http://www.premiumbeat.com/flash_music_players/original/thin/',
-		'filetypes' => 'mp3',
+		'filetypes' => array('mp3'),
 		'callback' =>'audiofield_premium_beat_thin',
 	);
 	
@@ -326,7 +326,7 @@ function audiofield_players(){
 		'path' => 'LWMusicPlayer.swf',
 		'name' => 'Premium Beat Mini Player',
 		'download_link' => 'http://www.premiumbeat.com/flash_music_players/original/mini/',
-		'filetypes' => 'mp3',
+		'filetypes' => array('mp3'),
 		'callback' =>'audiofield_premium_beat_mini',
 	);
 

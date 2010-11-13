@@ -10,7 +10,10 @@ global $user;
     return '';
   }
 
-	$output= _audiofield_get_player($element);
+  $info = pathinfo($element['#item']['filename']);
+  $op = $info['extension'];
+  $audiofile=file_create_url($element['#item']['filepath']);
+  $output= _audiofield_get_player($audiofile,$op);
 	
 	//If user is file owner check for download permission and display download link
 	if($user->uid==$element['#item']['uid'] && user_access('download own audio files')){
@@ -87,17 +90,21 @@ function theme_audiofield_file($file) {
 /**
  * Get the object for the suitable player for the parameter resource
 */
-function _audiofield_get_player($element) {
-  $info = pathinfo($element['#item']['filename']);
-  $op=$info['extension'];
+function _audiofield_get_player($audio_url,$op) {
+  global $base_path;
   
+  $audio_players=audiofield_players();
+	
   switch ($op) {
     case 'mp3':
-      return theme('audiofield_play_mp3', $element);
+	  $mp3_player_id=variable_get('audiofield_audioplayer', 0);
+	  $mp3_player=$audio_players[$mp3_player_id];
+	  $player_url=$base_path.variable_get('audiofield_players_dir', 'sites/all/libraries/player')."/". $mp3_player['path'];
+	  return call_user_func($mp3_player['callback'], $player_url,$audio_url);
     default:
 	  /* Let other modules implement players for the various extensions. For example to implement a player for wav files, other module
 	  would just need to create audiofield_play_wav theme function */
-	  return theme('audiofield_play_'.$op, $element);
+	//  return theme('audiofield_play_'.$op, $element);
       break;
   }
 }
