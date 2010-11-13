@@ -47,52 +47,11 @@ function audiofield_admin_settings_form() {
 		}
 	}
 	
-	/*
-    if (file_exists($player1)) {
-          $players[0]='<object id="audioplayer2" height="24" width="290" data="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" type="application/x-shockwave-flash">
-                          <param value="' . $base_path . 'sites/all/libraries/player/audio-player/player.swf" name="movie"/>
-                          <param value="playerID=2&amp;bg=0xCDDFF3&amp;leftbg=0x357DCE&amp;lefticon=0xF2F2F2&amp;rightbg=0xF06A51&amp;rightbghover=0xAF2910&amp;righticon=0xF2F2F2&amp;righticonhover=0xFFFFFF&amp;text=0x357DCE&amp;slider=0x357DCE&amp;track=0xFFFFFF&amp;border=0xFFFFFF&amp;loader=0xAF2910&amp;soundFile=' . $base_path . 'sites/all/libraries/player/Sample_Track.mp3" name="FlashVars"/>
-                          <param value="high" name="quality"/>
-                          <param value="false" name="menu"/>
-                          <param value="wmode" name="transparent"/>
-                          </object>';
- 
-    }
-    if (file_exists($player2)) {
-      $players[1]='<object type="application/x-shockwave-flash" width="175" height="14"
-                    data="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path . 'sites/all/libraries/player/Sample_Track.mp3">
-                    <param name="movie" value="' . $base_path . 'sites/all/libraries/player/xspf_player_slim.swf?song_url=' . $base_path .'sites/all/libraries/player/Sample_Track.mp3" />
-                    </object>';
-    }
-    if (file_exists($player3)) {
-      $players[2]='<object>
-                          <param name="autoplay" value="true" />
-                          <param name="controller"value="true" /> 
-                          <embed src="' . $base_path . 'sites/all/libraries/player/playerSinglePackage/playerSingle.swf"  width="192" height="80" float="left" wmode="transparent" flashvars="soundPath=' . $base_path .'sites/all/libraries/player/Sample_Track.mp3" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
-                          </embed>
-                          </object>';
-    }
-	if (file_exists($player4)) {
-      $players[3]='<object>
-                          <param name="autoplay" value="true" />
-                          <param name="controller"value="true" /> 
-                          <embed src="' . $base_path . 'sites/all/libraries/player/OriginalThinMusicPlayer.swf"  width="220" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $base_path .'sites/all/libraries/player/Sample_Track.mp3&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
-                          </embed>
-                          </object>';
-    }
-    if (file_exists($player5)) {
-     $players[4]='<object>
-                          <param name="autoplay" value="true" />
-                          <param name="controller"value="true" /> 
-                          <embed src="' . $base_path . 'sites/all/libraries/player/LWMusicPlayer.swf"  width="65" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $base_path .'sites/all/libraries/player/Sample_Track.mp3&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
-                           </embed>
-                           </object>';
-     }
-*/
 	//Flowplayer support by Rob Loach
 	if (module_exists('flowplayer')) {
-      $players['flowplayer'] = t('Flowplayer');
+      $players['mp3']['flowplayer'] = t('Flowplayer');
     }
+	
 	//MP3 Players list
 	if(!empty($players)){
 		$form['audiofield_audioplayer'] = array(
@@ -150,7 +109,7 @@ function audiofield_elements() {
  */
 function audiofield_theme() {
   $theme= array(
-      // Theme an image uploaded to audiofield with alt and title.
+      //TODO: Do we need all this themes?
       'audiofield_widget' => array(
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_widget.inc',
@@ -166,25 +125,12 @@ function audiofield_theme() {
       'audiofield_widget_file' => array(
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_widget.inc',
-      ),
-     /* 'audiofield_item' => array(
-      'arguments' => array('file' => NULL, 'field' => NULL),
-      'file' => 'audiofield_formatter.inc',
-      ),
-      'audiofield_file' => array(
-      'arguments' => array('file' => NULL),
-      'file' => 'audiofield_formatter.inc',
-      ),*/
+      ), 
       // Themes for the formatters.
       'audiofield_formatter_audiofield_embedded' => array(
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_formatter.inc',
       ),
-	  //Theme for the players
-/*	   'audiofield_play_mp3' => array(
-      'arguments' => array('element' => NULL),
-      'file' => 'audiofield_formatter.inc',
-      ),*/
   );
 
   return $theme;
