@@ -13,7 +13,7 @@ global $user;
   $info = pathinfo($element['#item']['filename']);
   $op = $info['extension'];
   $audiofile=file_create_url($element['#item']['filepath']);
-  $output= _audiofield_get_player($audiofile,$op);
+  $output= audiofield_get_player($audiofile,$op);
 	
 	//If user is file owner check for download permission and display download link
 	if($user->uid==$element['#item']['uid'] && user_access('download own audio files')){
@@ -87,27 +87,8 @@ function theme_audiofield_file($file) {
   return '<div class="filefield-file clear-block">'. $icon . l($link_text, $url, $options) .'</div>';
 }
 
-/**
- * Get the object for the suitable player for the parameter resource
-*/
-function _audiofield_get_player($audio_url,$op) {
-  global $base_path;
-  
-  $audio_players=audiofield_players();
-	
-  switch ($op) {
-    case 'mp3':
-	  $mp3_player_id=variable_get('audiofield_audioplayer', 0);
-	  $mp3_player=$audio_players[$mp3_player_id];
-	  return call_user_func($mp3_player['callback'], $base_path.$mp3_player['path'],$audio_url);
-    default:
-	  $other_player_id=variable_get('audiofield_audioplayer_'.$op, 'nanogong');
-	  $other_player=$audio_players[$other_player_id];
-	  return call_user_func($other_player['callback'], $base_path.$other_player['path'],$audio_url);
-      break;
-  }
-}
 
+/*
 function theme_audiofield_play_mp3($element){
 global $base_path;
 $player=variable_get('audiofield_audioplayer', 0);
@@ -159,4 +140,4 @@ $player=variable_get('audiofield_audioplayer', 0);
   
  
   return $output;
-}
+}*/

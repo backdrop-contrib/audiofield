@@ -181,10 +181,10 @@ function audiofield_theme() {
       'file' => 'audiofield_formatter.inc',
       ),
 	  //Theme for the players
-	   'audiofield_play_mp3' => array(
+/*	   'audiofield_play_mp3' => array(
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_formatter.inc',
-      ),
+      ),*/
   );
 
   return $theme;
@@ -287,6 +287,27 @@ function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
       }
       content_field_instance_update($field);
     }
+  }
+}
+
+/**
+ * Get the object for the suitable player for the parameter resource
+*/
+function audiofield_get_player($audio_url,$op) {
+  global $base_path;
+  
+  $audio_players=audiofield_players();
+	
+  switch ($op) {
+    case 'mp3':
+	  $mp3_player_id=variable_get('audiofield_audioplayer', 0);
+	  $mp3_player=$audio_players[$mp3_player_id];
+	  return call_user_func($mp3_player['callback'], $base_path.$mp3_player['path'],$audio_url);
+    default:
+	  $other_player_id=variable_get('audiofield_audioplayer_'.$op, 'nanogong');
+	  $other_player=$audio_players[$other_player_id];
+	  return call_user_func($other_player['callback'], $base_path.$other_player['path'],$audio_url);
+      break;
   }
 }
 
