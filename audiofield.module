@@ -35,7 +35,7 @@ function audiofield_admin_settings_form() {
   global $base_url;
 
 	$audio_players=audiofield_players();
-	
+	$players=array();
 	foreach($audio_players as $id=>$player){
 		if (file_exists($player['path'])) {
 			foreach($player['filetypes'] as $filetype){
@@ -46,11 +46,6 @@ function audiofield_admin_settings_form() {
 			$download_players.='<li>Download '.l($player['name'],$player['download_link']).'</li>';
 		}
 	}
-	
-	//Flowplayer support by Rob Loach
-	if (module_exists('flowplayer')) {
-      $players['mp3']['flowplayer'] = t('Flowplayer');
-    }
 	
 	//MP3 Players list
 	if(!empty($players)){
@@ -302,6 +297,16 @@ function audiofield_players(){
 		'filetypes' => array('mp3'),
 		'callback' =>'audiofield_premium_beat_mini',
 	);
+	
+	if (module_exists('flowplayer')) {
+		$players['flowplayer']=array(
+			'path' => drupal_get_path('module', 'flowplayer') .'/flowplayer/flowplayer.swf',
+			'name' => 'Flowplayer',
+			'download_link' => 'http://drupal.org/project/flowplayer',
+			'filetypes' => array('mp3'),
+			'callback' =>'audiofield_flowplayer',
+		);
+	}
 
 	return $players;
 }
@@ -343,4 +348,12 @@ return '<object><param name="autoplay" value="true" />
             <param name="controller"value="true" /> 
             <embed src="' . $player_path . '"  width="65" height="21" float="left" wmode="transparent" flashvars="mediaPath=' . $audio_file .'&defaultVolume=100" autostart="true" loop="false"  controller="true" bgcolor="#FF9900" pluginspage="http://www.macromedia.com/go/getflashplayer" >
             </embed></object>';
+}
+
+if (module_exists('flowplayer')) {
+function audiofield_flowplayer($player_path,$audio_file){
+return theme('flowplayer', $audio_file, 'audiofield', array(
+             'style' => 'height: 24px',
+			 ));
+}
 }
