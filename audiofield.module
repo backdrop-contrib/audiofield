@@ -243,10 +243,16 @@ function audiofield_get_player($audio_url,$op) {
     case 'mp3':
 	  $mp3_player_id=variable_get('audiofield_audioplayer', 0);
 	  $mp3_player=$audio_players[$mp3_player_id];
+	  if(empty($mp3_player['callback'])){
+		return "You must install at least one player to be able to play the audio.";
+	  }
 	  return call_user_func($mp3_player['callback'], $base_path.$mp3_player['path'],$audio_url);
     default:
 	  $other_player_id=variable_get('audiofield_audioplayer_'.$op, 'nanogong');
 	  $other_player=$audio_players[$other_player_id];
+	  if(empty($other_player['callback'])){
+		return "You must install at least one player to be able to play the audio.";
+	  }
 	  return call_user_func($other_player['callback'], $base_path.$other_player['path'],$audio_url);
       break;
   }
