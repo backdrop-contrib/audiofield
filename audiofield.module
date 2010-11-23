@@ -109,7 +109,7 @@ function audiofield_theme() {
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_widget.inc',
       ),
-      'audiofield_widget_item' => array(
+     /* 'audiofield_widget_item' => array(
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_widget.inc',
       ),
@@ -120,7 +120,7 @@ function audiofield_theme() {
       'audiofield_widget_file' => array(
       'arguments' => array('element' => NULL),
       'file' => 'audiofield_widget.inc',
-      ), 
+      ), */
       // Themes for the formatters.
       'audiofield_formatter_audiofield_embedded' => array(
       'arguments' => array('element' => NULL),
