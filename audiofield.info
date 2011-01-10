@@ -1,0 +1,11 @@
+name = AudioField
+description = Handle audio upload using fields.
+package = Audio
+core = 7.x
+dependencies[] = file
+files[] = audiofield.install
+files[] = audiofield.module
+files[] = audiofield_formatter.inc
+files[] = audiofield_widget.inc
+
+
