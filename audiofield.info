@@ -1,8 +1,0 @@
-; $Id: 
-name = AudioField
-description = "Adds audio widget for uploading and playing audio files."
-core = 6.x
-dependencies[] = filefield
-package = CCK
-
-
