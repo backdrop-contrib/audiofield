@@ -9,7 +9,7 @@
  */
 function audiofield_field_info() {
   return array(
-    'image' => array(
+    'audio' => array(
       'label' => t('Audio'),
       'description' => t('This field stores the ID of an audio file as an integer value.'),
       'settings' => array(
@@ -129,7 +129,7 @@ function audiofield_field_is_empty($item, $field) {
 /**
  * Implements hook_field_widget_info().
  */
-function audiofield_widget_info() {
+function audiofield_field_widget_info() {
   return array(
     'audiofield_widget' => array(
       'label' => t('Audio Upload'),
@@ -302,32 +302,15 @@ function audiofield_field_formatter_settings_summary($field, $instance, $view_mo
  * Implements hook_field_formatter_view().TODO
  */
 function audiofield_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  $element = array();
-
-  // Check if the formatter involves a link.
-  if ($display['settings']['image_link'] == 'content') {
-    $uri = entity_uri($entity_type, $entity);
-  }
-  elseif ($display['settings']['image_link'] == 'file') {
-    $link_file = TRUE;
-  }
-
-  foreach ($items as $delta => $item) {
-    if (isset($link_file)) {
-      $uri = array(
-        'path' => file_create_url($item['uri']),
-        'options' => array(),
-      );
-    }
-    $element[$delta] = array(
-      '#theme' => 'image_formatter',
-      '#item' => $item,
-      '#image_style' => $display['settings']['image_style'],
-      '#path' => isset($uri) ? $uri : '',
-    );
-  }
-
-  return $element;
+  //$display['type']='file_default';
+  //return file_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display);
+   foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'audiofield_formatter_audiofield_embedded',
+          '#file' => (object) $item,
+        );
+      }
+	  return $element;
 }
 
 /**

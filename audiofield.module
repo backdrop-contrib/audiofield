@@ -1,9 +1,8 @@
 <?php
 
-// Load all Field module hooks for Image.
+// Load all Field module hooks for Audio.
 module_load_include('inc', 'audiofield', 'audio.field');
-// Load all Field module hooks for Image.
-require_once DRUPAL_ROOT . '/modules/image/image.field.inc';
+
 
 /**
  * Implementation of hook_menu().
@@ -97,7 +96,7 @@ function audiofield_theme() {
     
       // Themes for the formatters.
       'audiofield_formatter_audiofield_embedded' => array(
-      'arguments' => array('element' => NULL),
+      'arguments' => array('variables' => NULL),
       'file' => 'audiofield_formatter.inc',
       ),
   );
