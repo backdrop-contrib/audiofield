@@ -2,14 +2,15 @@
 
 // Load all Field module hooks for Image.
 module_load_include('inc', 'audiofield', 'audio.field');
-
+// Load all Field module hooks for Image.
+require_once DRUPAL_ROOT . '/modules/image/image.field.inc';
 
 /**
  * Implementation of hook_menu().
  */
 function audiofield_menu() {
   
-  $items['admin/config/audiofield'] = array(
+  $items['admin/config/media/audiofield'] = array(
     'title' => 'Audio Field',
     'description' => 'Configure Audiofield.',
     'page callback' => 'drupal_get_form',
@@ -36,7 +37,7 @@ function audiofield_admin_settings_form() {
 	foreach($audio_players as $id=>$player){
 		if (file_exists($player['path'])) {
 			foreach($player['filetypes'] as $filetype){
-				$players[$filetype][$id]=call_user_func($player['callback'], $base_path.$player['path'],"");
+				$players[$filetype][$id]=$player['name'] . '<br/>' . call_user_func($player['callback'], $base_path.$player['path'],"");
 			}
 		}
 		else{
@@ -91,7 +92,7 @@ function audiofield_theme() {
   $theme= array(
       'audiofield_widget' => array(
       'arguments' => array('element' => NULL),
-      'file' => 'audiofield_widget.inc',
+      //'file' => 'audiofield_widget.inc',
       ),
     
       // Themes for the formatters.
