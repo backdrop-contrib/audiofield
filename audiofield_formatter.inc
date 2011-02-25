@@ -1,5 +1,4 @@
 <?php
-// $Id$:
 /**@file
  * Theme function for 'embedded' audio.
  */
