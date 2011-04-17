@@ -133,7 +133,7 @@ function audiofield_field_widget_info() {
   return array(
     'audiofield_widget' => array(
       'label' => t('Audio Upload'),
-      'field types' => array('audio'),
+      'field types' => array('file'),
       'settings' => array(
         'progress_indicator' => 'throbber',
       ),
@@ -225,6 +225,7 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
 function theme_audiofield_widget($variables) {
   global $user;
   $element = $variables['element'];
+  dcp( $element );
   //Don't render player if there is no file.
   if (!$element['#item']['filepath']) {
     return '';
@@ -233,16 +234,16 @@ function theme_audiofield_widget($variables) {
   $info = pathinfo($element['#item']['filename']);
   $op = $info['extension'];
   $audiofile=file_create_url($element['#item']['filepath']);
-  $output= audiofield_get_player($audiofile,$op);
-	
-	//If user is file owner check for download permission and display download link
-	if($user->uid==$element['#item']['uid'] && user_access('download own audio files')){
-	   $output.='<div class="audio-download"><b>Download:</b>'.theme('filefield_file', $element['#item']).'</div>';
-    }
-	elseif(user_access('download all audio files')){
-	//If user has permission to download all audio files, then display download link
-		$output.='<div class="audio-download"><b>Download:</b>'.theme('filefield_file', $element['#item']).'</div>';
-	}
+  $output= audiofield_get_player($audiofile, $op);
+  
+  //If user is file owner check for download permission and display download link
+  if ($user->uid==$element['#item']['uid'] && user_access('download own audio files')) {
+    $output .='<div class="audio-download"><b>Download:</b>' . theme('filefield_file', $element['#item']) . '</div>';
+  }
+  elseif (user_access('download all audio files')) {
+  //If user has permission to download all audio files, then display download link
+    $output .='<div class="audio-download"><b>Download:</b>' . theme('filefield_file', $element['#item']) . '</div>';
+  }
 
   return $output;
 }
@@ -254,7 +255,7 @@ function audiofield_field_formatter_info() {
   $formatters = array(
     'audiofield_embedded' => array(
       'label' => t('Audio'),
-      'field types' => array('filefield'),
+      'field types' => array('file', 'audio' ),
       'description' => t('Displays audio embedded in a web page.'),
     ),
   );
@@ -278,7 +279,7 @@ function audiofield_field_formatter_settings_summary($field, $instance, $view_mo
   unset($image_styles['']);
   // Styles could be lost because of enabled/disabled modules that defines
   // their styles in code.
-  if (isset($image_styles[$settings['image_style']])) {
+  if (isset($settings['image_style']) && isset($image_styles[$settings['image_style']])) {
     $summary[] = t('Image style: @style', array('@style' => $image_styles[$settings['image_style']]));
   }
   else {
@@ -290,7 +291,7 @@ function audiofield_field_formatter_settings_summary($field, $instance, $view_mo
     'file' => t('Linked to file'),
   );
   // Display this setting only if image is linked.
-  if (isset($link_types[$settings['image_link']])) {
+  if (isset($settings['image_link']) && isset($link_types[$settings['image_link']])) {
     $summary[] = $link_types[$settings['image_link']];
   }
 
@@ -302,15 +303,13 @@ function audiofield_field_formatter_settings_summary($field, $instance, $view_mo
  * Implements hook_field_formatter_view().TODO
  */
 function audiofield_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  //$display['type']='file_default';
-  //return file_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display);
-   foreach ($items as $delta => $item) {
-        $element[$delta] = array(
-          '#theme' => 'audiofield_formatter_audiofield_embedded',
-          '#file' => (object) $item,
-        );
-      }
-	  return $element;
+  $elements = array();
+
+  foreach ($items as $delta => $item) {
+    	$elements[ ] =  array( '#markup' => theme( 'audiofield_formatter_audiofield_embedded', array( 'file' => (object)$item )));    	
+  }
+
+  return $elements;
 }
 
 /**
