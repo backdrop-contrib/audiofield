@@ -5,63 +5,8 @@
  */
 
 /**
- * Implements hook_field_info().
- */
-function audiofield_field_info() {
-  return array(
-    'audio' => array(
-      'label' => t('Audio'),
-      'description' => t('This field stores the ID of an audio file as an integer value.'),
-      'settings' => array(
-        'uri_scheme' => variable_get('file_default_scheme', 'public'),
-      ),
-      'instance_settings' => array(
-        'file_extensions' => 'mp3',
-        'file_directory' => '',
-        'max_filesize' => '',
-      ),
-      'default_widget' => 'audiofield_widget',
-      'default_formatter' => 'audiofield_embedded',
-    ),
-  );
-}
-
-/**
- * Implements hook_field_settings_form().
- TODO: Do we need this?
- */
-function audiofield_field_settings_form($field, $instance) {
-  $defaults = field_info_field_settings($field['type']);
-  $settings = array_merge($defaults, $field['settings']);
-
-  $scheme_options = array();
-  foreach (file_get_stream_wrappers(STREAM_WRAPPERS_WRITE_VISIBLE) as $scheme => $stream_wrapper) {
-    $scheme_options[$scheme] = $stream_wrapper['name'];
-  }
-  $form['uri_scheme'] = array(
-    '#type' => 'radios',
-    '#title' => t('Upload destination'),
-    '#options' => $scheme_options,
-    '#default_value' => $settings['uri_scheme'],
-    '#description' => t('Select where the final files should be stored. Private file storage has significantly more overhead than public files, but allows restricted access to files within this field.'),
-  );
-
-  return $form;
-
-}
-
-/**
- * Implements hook_field_instance_settings_form().
- */
-function audiofield_field_instance_settings_form($field, $instance) {
-  $settings = $instance['settings'];
-  // Use the file field instance settings form as a basis.
-  $form = file_field_instance_settings_form($field, $instance);
-  return $form;
-}
-
-/**
  * Implements hook_field_load().
+ TODO: Do we need this?
  */
 function audiofield_field_load($entity_type, $entities, $field, $instances, $langcode, &$items, $age) {
   file_field_load($entity_type, $entities, $field, $instances, $langcode, $items, $age);
@@ -85,41 +30,6 @@ function audiofield_field_prepare_view($entity_type, $entities, $field, $instanc
 }
 
 /**
- * Implements hook_field_presave().
- */
-function audiofield_field_presave($entity_type, $entity, $field, $instance, $langcode, &$items) {
-  file_field_presave($entity_type, $entity, $field, $instance, $langcode, $items);
-}
-
-/**
- * Implements hook_field_insert().
- */
-function audiofield_field_insert($entity_type, $entity, $field, $instance, $langcode, &$items) {
-  file_field_insert($entity_type, $entity, $field, $instance, $langcode, $items);
-}
-
-/**
- * Implements hook_field_update().
- */
-function audiofield_field_update($entity_type, $entity, $field, $instance, $langcode, &$items) {
-  file_field_update($entity_type, $entity, $field, $instance, $langcode, $items);
-}
-
-/**
- * Implements hook_field_delete().
- */
-function audiofield_field_delete($entity_type, $entity, $field, $instance, $langcode, &$items) {
-  file_field_delete($entity_type, $entity, $field, $instance, $langcode, $items);
-}
-
-/**
- * Implements hook_field_delete_revision().
- */
-function audiofield_field_delete_revision($entity_type, $entity, $field, $instance, $langcode, &$items) {
-  file_field_delete_revision($entity_type, $entity, $field, $instance, $langcode, $items);
-}
-
-/**
  * Implements hook_field_is_empty().
  */
 function audiofield_field_is_empty($item, $field) {
@@ -135,7 +45,8 @@ function audiofield_field_widget_info() {
       'label' => t('Audio Upload'),
       'field types' => array('file'),
       'settings' => array(
-        'progress_indicator' => 'throbber',
+        //'progress_indicator' => 'throbber',
+        //'file_extensions' => 'mp3',
       ),
       'behaviors' => array(
         'multiple values' => FIELD_BEHAVIOR_CUSTOM,
@@ -148,14 +59,20 @@ function audiofield_field_widget_info() {
 /**
  * Implements hook_field_widget_settings_form().
  */
+ /*
 function audiofield_field_widget_settings_form($field, $instance) {
   $widget = $instance['widget'];
   $settings = $widget['settings'];
 
   // Use the file widget settings form.
+  //$form = file_field_instance_settings_form($field, $instance);
+ 
   $form = file_field_widget_settings_form($field, $instance);
+  
   return $form;
 }
+*/
+
 
 /**
  * Implements hook_field_widget_form().
@@ -189,6 +106,7 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
   else {
     $elements['#file_upload_description'] = theme('file_upload_help', array('upload_validators' => $elements[0]['#upload_validators']));
   }
+
   return $elements;
 }
 
@@ -197,6 +115,7 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
  *
  * Expands the audiofield_widget type to additional fields.
  */
+ 
 function audiofield_field_widget_process($element, &$form_state, $form) {
   $item = $element['#value'];
   $item['fid'] = $element['fid']['#value'];
@@ -206,10 +125,6 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
   $settings = $instance['settings'];
   $widget_settings = $instance['widget']['settings'];
 
- // $element['#theme'] = 'image_widget';
-  //$element['#attached']['css'][] = drupal_get_path('module', 'image') . '/image.css';
-
-  
   return $element;
 }
 
@@ -255,7 +170,7 @@ function audiofield_field_formatter_info() {
   $formatters = array(
     'audiofield_embedded' => array(
       'label' => t('Audio'),
-      'field types' => array('file', 'audio' ),
+      'field types' => array('file'),
       'description' => t('Displays audio embedded in a web page.'),
     ),
   );
@@ -266,8 +181,8 @@ function audiofield_field_formatter_info() {
 
 /**
  * Implements hook_field_formatter_settings_summary().
- TODO
- */
+ TODO: Can add various settings for formatter
+ *//*
 function audiofield_field_formatter_settings_summary($field, $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
@@ -297,7 +212,7 @@ function audiofield_field_formatter_settings_summary($field, $instance, $view_mo
 
   return implode('<br />', $summary);
 }
-
+*/
 
 /**
  * Implements hook_field_formatter_view().TODO
@@ -306,7 +221,7 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
   $elements = array();
 
   foreach ($items as $delta => $item) {
-    	$elements[ ] =  array( '#markup' => theme( 'audiofield_formatter_audiofield_embedded', array( 'file' => (object)$item )));    	
+    	$elements[] =  array( '#markup' => theme( 'audiofield_formatter_audiofield_embedded', array( 'file' => (object)$item )));    	
   }
 
   return $elements;
@@ -322,7 +237,7 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
  *   - path: An array containing the link 'path' and link 'options'.
  *
  * @ingroup themeable
- */
+ *//*
 function theme_audiofield_formatter($variables) {
   $item = $variables['item'];
   $image = array(
@@ -351,4 +266,4 @@ function theme_audiofield_formatter($variables) {
   }
 
   return $output;
-}
+}*/

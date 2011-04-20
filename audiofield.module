@@ -107,7 +107,6 @@ function audiofield_theme() {
   $theme= array(
       'audiofield_widget' => array(
       'variables' => array('element' => NULL),
-      //'file' => 'audiofield_widget.inc',
       ),
     
       // Themes for the formatters.
@@ -327,5 +326,43 @@ if (module_exists('flowplayer')) {
 function audiofield_flowplayer($player_path, $audio_file) {
   return theme('flowplayer', $audio_file, 'audiofield', array( 'style' => 'height: 24px', ));
 }
-
 }
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function audiofield_form_field_ui_field_edit_form_alter(&$form, &$form_state) {
+  $instance = $form['#instance'];
+ 
+  if ($instance['widget']['type'] == 'audiofield_widget') {
+    $form['instance']['settings']['file_extensions']['#default_value'] = 'mp3';
+  }
+}
+
+/**
+ * Implementation of hook_form_[form_id]_alter().
+ *
+ * Modify the add new field form to change the default formatter.
+ */
+ /*
+function audiofield_form_content_field_overview_form_alter(&$form, &$form_state) {
+  $form['#submit'][] = 'audiofield_form_content_field_overview_submit';
+}
+*/
+/**
+ * Submit handler to set a new field's formatter to "audiofield_embedded".
+ *//*
+function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
+  if (isset($form_state['fields_added']['_add_new_field']) && isset($form['#type_name'])) {
+    $new_field = $form_state['fields_added']['_add_new_field'];
+    $node_type = $form['#type_name'];
+    $field = content_fields($new_field, $node_type);
+    if ($field['widget']['module'] == 'audiofield') {
+      foreach ($field['display_settings'] as $display_type => $display_settings) {
+        if ($field['display_settings'][$display_type]['format'] == 'default') {
+          $field['display_settings'][$display_type]['format'] = 'audiofield_embedded';
+        }
+      }
+      content_field_instance_update($field);
+    }
+  }
+}*/
