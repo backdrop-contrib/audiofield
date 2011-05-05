@@ -11,11 +11,9 @@ function theme_audiofield_formatter_audiofield_embedded($variables) {
     return '';
   }
 
-  $elements = array();
-  
-  $op='mp3';
   $audiofile=file_create_url($file->uri);
-  
+  $info = pathinfo($audiofile);
+  $op = $info['extension'];
   $output = audiofield_get_player($audiofile, $op);
   
   //If user is file owner check for download permission and display download link

@@ -136,7 +136,7 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
  *   - element: A render element representing the audio field widget.
  *
  * @ingroup themeable
- */
+ *//*
 function theme_audiofield_widget($variables) {
   global $user;
   $element = $variables['element'];
@@ -162,7 +162,7 @@ function theme_audiofield_widget($variables) {
 
   return $output;
 }
-
+*/
 /**
  * Implements hook_field_formatter_info().
  */
