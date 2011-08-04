@@ -129,7 +129,7 @@ function audiofield_get_player_def( $op ) {
     $mp3_player_id=variable_get('audiofield_audioplayer', 0);
     $mp3_player=isset( $audio_players[$mp3_player_id] ) ? $audio_players[$mp3_player_id] : FALSE;
     if(( ! $mp3_player ) || empty($mp3_player['callback'])) {
-	  drupal_set_message(  "You must install and select at least one player to be able to play the audio." );
+	  //drupal_set_message(  "You must install and select at least one player to be able to play the audio." );
 	  return array();
     }
     return $mp3_player;
