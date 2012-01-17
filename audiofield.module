@@ -75,7 +75,7 @@ function audiofield_admin_settings_form() {
   foreach ($players as $filetype => $type_player) {
     $form['audiofield_audioplayer_' . $filetype] = array(
       '#type' => 'radios',
-      '#title' => check_plain( $filetype . '&nbsp;' . t('Audio Players')),
+      '#title' => check_plain( $filetype . ' ' . t('Audio Players')),
       '#options' => $type_player,
       '#default_value' => variable_get('audiofield_audioplayer_' . $filetype, 0),
     );
@@ -240,7 +240,7 @@ function audiofield_players() {
 function audiofield_jplayer( $player_path, $audio_file ) {
   static $instanceIndex = 0;
   if ( $audio_file == '' ) {
-    return 'HTML5 media player for jQuery';
+    return '- HTML5 media player for jQuery';
   } 
   else {
     $instanceIndex += 1;
