@@ -162,8 +162,15 @@ function audiofield_get_player($audio_url, $op) {
    
   $audio_players=audiofield_players();
   $variable_name = 'audiofield_audioplayer' . ($op == 'mp3' ? '' : "_$op");
+  $audio_index = variable_get($variable_name, '');
+
+  if ($audio_index) {
+    $player = $audio_players[$audio_index];
+  }
+  else {
+    drupal_set_message(t('No audio player set for %filetype filetype',array('%filetype' => $op)), 'error');
+  }
   
-  $player = $audio_players[variable_get($variable_name, '')];
   if (empty($player)) {
     return audiofield_embeddedplayer($audio_url);
   }
