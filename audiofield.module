@@ -40,10 +40,10 @@ function audiofield_admin_settings_form() {
   global $base_url;
 
   $audio_players=audiofield_players();
-  $players=array();
+  $players = array();
   $download_players = '';
   foreach ($audio_players as $id => $player) {
-    if (file_exists($player['path'])) {
+    if (file_exists($player['path']) || (isset($player['external']) && $player['external'])) {
       foreach ($player['filetypes'] as $filetype) {
         $players[$filetype][$id]=$player['name'] . '<br/>';/* . call_user_func($player['callback'], $base_path . $player['path'], "");*/
       }
@@ -56,15 +56,15 @@ function audiofield_admin_settings_form() {
   }
   
   //MP3 Players list
-  if (!empty($players)) {
+  if (!empty($players['mp3'])) {
     $form['audiofield_audioplayer'] = array(
       '#type' => 'radios',
       '#title' => t('MP3 Audio Players'),
       '#options' => $players['mp3'],
       '#default_value' => variable_get('audiofield_audioplayer', 0),
     );
-    }
-  unset($players['mp3']);
+    unset($players['mp3']);
+  }
   
   //Other players list (wav, wma,...)
   foreach ($players as $filetype => $type_player) {
