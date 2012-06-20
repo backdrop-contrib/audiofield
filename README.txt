@@ -9,8 +9,10 @@ In order to activate this module you have to get one of audio players from the f
 3. http://www.premiumbeat.com/flash_music_players/original/single/
 4. http://www.premiumbeat.com/flash_music_players/original/thin/
 5. http://www.premiumbeat.com/flash_music_players/original/mini/
+6. Soundmanager2 http://www.schillmania.com/projects/soundmanager2/doc/download/
 
 Or install FlowPlayer module (http://drupal.org/project/flowplayer) to use Flowplayer.
+Or use Google Reader player (already installed with the module).
 
 Once you got the above audio players you have to create a new folder called "player "at this 
 directory "sites/all/libraries". Now you can unzip the audio players directly into the "player" folder.
