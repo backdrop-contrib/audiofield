@@ -59,6 +59,9 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
   $elements = file_field_widget_form($form, $form_state, $field, $instance, $langcode, $items, $delta, $element);
   $settings = $instance['settings'];
 
+  foreach (element_children($elements) as $delta) {
+      $elements[$delta]['#process'] = array('audiofield_field_widget_process');
+  }
   if ($field['cardinality'] == 1) {
     // If there's only one field, return it as delta 0.
     if (empty($elements[0]['#default_value']['fid'])) {
@@ -75,18 +78,21 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
 /**
  * An element #process callback for the audiofield_widget field type.
  *
- * Expands the audiofield_widget type to additional fields.
+ * Display audio player in node edit mode
  */
- 
 function audiofield_field_widget_process($element, &$form_state, $form) {
-  $item = $element['#value'];
-  $item['fid'] = $element['fid']['#value'];
-
-  $instance = field_widget_instance($element, $form_state);
-
-  $settings = $instance['settings'];
-  $widget_settings = $instance['widget']['settings'];
-
+  $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
+  $element = file_managed_file_process($element, $form_state, $form);
+  if ($fid && $element['#file']) {
+    $audiofile=file_create_url($element['#file']->uri);
+    $info = pathinfo($audiofile);
+    $op = $info['extension'];
+	$element['filename'] = array(
+      '#type' => 'markup',
+      '#markup' => audiofield_get_player($audiofile, $op),
+      '#weight' => -10,
+    );
+  }
   return $element;
 }
 

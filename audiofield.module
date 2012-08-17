@@ -26,11 +26,11 @@ function audiofield_permission() {
    return array(
     'download own audio files' => array(
       'title' => t('Download Own Audio Files'),
-      'description' => t('TODO Add a description for \'access API reference\''),
+      'description' => t('Let the users download their own audio files.'),
     ),
     'download all audio files' => array(
       'title' => t('Download All Audio Files'),
-      'description' => t('TODO Add a description for \'administer API reference\''),
+      'description' => t('Let the users download any audio files.'),
     ),
   );
 }
@@ -161,6 +161,6 @@ function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
           $instance['display'][$display_type]['type'] = 'audiofield_embedded';
         }
     }
-     field_update_instance($instance);
+    field_update_instance($instance);
   }   
 }
