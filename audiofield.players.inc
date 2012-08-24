@@ -254,10 +254,16 @@ function audiofield_soundmanager2($player_path, $audio_file) {
 
 if (module_exists('flowplayer')) {
 function audiofield_flowplayer($player_path, $audio_file) {
+  static $seq = 1;
   $variables = array(
-    'config' =>  $audio_file,
-    'id' => 'audiofield',
-    'attributes' => array('style' => 'height: 24px',),
+    'config' =>  array(
+        'clip' => array(
+            'url' => $audio_file,
+            'autoPlay' => FALSE,
+        ),
+    ),
+    'id' => 'audiofield-' . $seq++,
+    'attributes' => array('style' => 'height: 24px'),
   );
   return theme('flowplayer', $variables);
 }
