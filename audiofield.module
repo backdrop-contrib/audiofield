@@ -124,7 +124,7 @@ function audiofield_get_player($audio_url, $op) {
    if (empty($player)) {
      return audiofield_embeddedplayer($audio_url);
    }
-  return call_user_func($player['callback'], $base_path . $player['path'], $audio_url);
+  return call_user_func($player['callback'], $base_path. $player['path'], $audio_url);
 }
 
 /**
@@ -165,3 +165,13 @@ function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
     field_update_instance($instance);
   }   
 }
+
+/**
+ * Implements hook_filefield_sources_widgets().
+ *
+ * This returns a list of widgets that are compatible with FileField Sources.
+ */
+ /*
+function audiofield_filefield_sources_widgets() {
+  return array('audiofield_widget');
+}*/
