@@ -61,7 +61,7 @@ function audiofield_admin_settings_form() {
       '#type' => 'radios',
       '#title' => t('MP3 Audio Players'),
       '#options' => $players['mp3'],
-      '#default_value' => variable_get('audiofield_audioplayer', 0),
+      '#default_value' => variable_get('audiofield_audioplayer', 'google_reader'),
     );
     unset($players['mp3']);
   }
@@ -119,7 +119,8 @@ function audiofield_get_player($audio_url, $op) {
    $op = strtolower($op);
    $audio_players=audiofield_players();
    $variable_name = 'audiofield_audioplayer' . ($op == 'mp3' ? '' : "_$op");
-   $player = $audio_players[variable_get($variable_name, '')];
+   $player_id = variable_get($variable_name, '');
+   $player = isset($audio_players[$player_id]) ? $audio_players[$player_id] : NULL;
    if (empty($player)) {
      return audiofield_embeddedplayer($audio_url);
    }
