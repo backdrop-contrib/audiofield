@@ -81,13 +81,15 @@ function audiofield_players() {
       'callback' => 'audiofield_jplayer',
     );
     
-    $players['jplayer_module']=array(
+    /*
+	$players['jplayer_module']=array(
       'path' => '',
       'name' => 'jPlayer Module',
       'download_link' => 'http://drupal.org/project/jplayer',
       'filetypes' => array('mp3', 'm4a', 'oga', 'webma', 'wav'),
       'callback' => 'audiofield_jplayer_module',
     );
+	*/
 
 	return $players;
 }
