@@ -23,7 +23,7 @@ function audiofield_menu() {
  * Implementation of hook_permission().
  */
 function audiofield_permission() {
-   return array(
+  return array(
     'download own audio files' => array(
       'title' => t('Download Own Audio Files'),
       'description' => t('Let the users download their own audio files.'),
@@ -39,22 +39,22 @@ function audiofield_admin_settings_form() {
   global $base_path;
   global $base_url;
 
-  $audio_players=audiofield_players();
+  $audio_players = audiofield_players();
   $players = array();
   $download_players = '';
   foreach ($audio_players as $id => $player) {
     if (file_exists($player['path']) || (isset($player['external']) && $player['external'])) {
       foreach ($player['filetypes'] as $filetype) {
-        $players[$filetype][$id]=$player['name'] . '<br/>';/* . call_user_func($player['callback'], $base_path . $player['path'], "");*/
+        $players[$filetype][$id] = $player['name'] . '<br/>'; /* . call_user_func($player['callback'], $base_path . $player['path'], "");*/
       }
     }
     else {
-      if(isset($player['download_link'])) {
-        $download_players .='<li>Download ' . l($player['name'], $player['download_link']) . '</li>';
+      if (isset($player['download_link'])) {
+        $download_players .= '<li>Download ' . l($player['name'], $player['download_link']) . '</li>';
       }
     }
   }
-  
+
   //MP3 Players list
   if (!empty($players['mp3'])) {
     $form['audiofield_audioplayer'] = array(
@@ -65,24 +65,24 @@ function audiofield_admin_settings_form() {
     );
     unset($players['mp3']);
   }
-  
+
   //Other players list (wav, wma,...)
   foreach ($players as $filetype => $type_player) {
     $form['audiofield_audioplayer_' . $filetype] = array(
       '#type' => 'radios',
-      '#title' => check_plain( $filetype . ' ' . t('Audio Players')),
+      '#title' => check_plain($filetype . ' ' . t('Audio Players')),
       '#options' => $type_player,
       '#default_value' => variable_get('audiofield_audioplayer_' . $filetype, 0),
     );
   }
-  
+
   $form['audiofield_players_dir'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Audio Players Directory'),
+    '#type' => 'textfield',
+    '#title' => t('Audio Players Directory'),
     '#description' => t('Download and extract audio players in this directory'),
-      '#default_value' => variable_get('audiofield_players_dir', 'sites/all/libraries/player'),
-    );
-  
+    '#default_value' => variable_get('audiofield_players_dir', 'sites/all/libraries/player'),
+  );
+
   if (!empty($download_players)) {
     $form['audiofield_downloadaudioplayer'] = array(
       '#type' => 'item',
@@ -90,7 +90,7 @@ function audiofield_admin_settings_form() {
       '#markup' => '<ul class="audiofield-download-players">' . $download_players . '</ul>',
     );
   }
-  
+
   return system_settings_form($form);
 }
 
@@ -99,12 +99,12 @@ function audiofield_admin_settings_form() {
  * Implementation of hook_theme().
  */
 function audiofield_theme() {
-  $theme= array(
-      // Themes for the formatters.
-      'audiofield_formatter_audiofield_embedded' => array(
+  $theme = array(
+    // Themes for the formatters.
+    'audiofield_formatter_audiofield_embedded' => array(
       'variables' => array('file' => NULL),
       'file' => 'audiofield_formatter.inc',
-      ),
+    ),
   );
   $theme = array_merge($theme, _audiofield_theme());
   return $theme;
@@ -112,19 +112,19 @@ function audiofield_theme() {
 
 /**
  * Get the object for the suitable player for the parameter resource
-*/
+ */
 function audiofield_get_player($audio_url, $op) {
   global $base_path;
-   //Lets convert $op to lowercase
-   $op = strtolower($op);
-   $audio_players=audiofield_players();
-   $variable_name = 'audiofield_audioplayer' . ($op == 'mp3' ? '' : "_$op");
-   $player_id = variable_get($variable_name, '');
-   $player = isset($audio_players[$player_id]) ? $audio_players[$player_id] : NULL;
-   if (empty($player)) {
-     return audiofield_embeddedplayer($audio_url);
-   }
-  return call_user_func($player['callback'], $base_path. $player['path'], $audio_url);
+  //Lets convert $op to lowercase
+  $op = strtolower($op);
+  $audio_players = audiofield_players();
+  $variable_name = 'audiofield_audioplayer' . ($op == 'mp3' ? '' : "_$op");
+  $player_id = variable_get($variable_name, '');
+  $player = isset($audio_players[$player_id]) ? $audio_players[$player_id] : NULL;
+  if (empty($player)) {
+    return audiofield_embeddedplayer($audio_url);
+  }
+  return call_user_func($player['callback'], $base_path . $player['path'], $audio_url);
 }
 
 /**
@@ -132,7 +132,7 @@ function audiofield_get_player($audio_url, $op) {
  */
 function audiofield_form_field_ui_field_edit_form_alter(&$form, &$form_state) {
   $instance = $form['#instance'];
- 
+
   if ($instance['widget']['type'] == 'audiofield_widget') {
     $form['instance']['settings']['file_extensions']['#default_value'] = 'mp3';
   }
@@ -153,17 +153,17 @@ function audiofield_form_field_ui_field_settings_form_alter(&$form, &$form_state
 function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
   $entity_type = 'node';
   $field_name = $form_state['values']['field']['field_name'];
-  $bundle =  $form_state['complete form']['#bundle'];
+  $bundle = $form_state['complete form']['#bundle'];
   $instance = field_read_instance($entity_type, $field_name, $bundle);
 
   if ($instance['widget']['module'] == 'audiofield') {
     foreach ($instance['display'] as $display_type => $display_settings) {
-        if ($instance['display'][$display_type]['type'] == 'file_default') {
-          $instance['display'][$display_type]['type'] = 'audiofield_embedded';
-        }
+      if ($instance['display'][$display_type]['type'] == 'file_default') {
+        $instance['display'][$display_type]['type'] = 'audiofield_embedded';
+      }
     }
     field_update_instance($instance);
-  }   
+  }
 }
 
 /**
@@ -171,7 +171,7 @@ function audiofield_form_content_field_overview_submit(&$form, &$form_state) {
  *
  * This returns a list of widgets that are compatible with FileField Sources.
  */
- /*
+/*
 function audiofield_filefield_sources_widgets() {
   return array('audiofield_widget');
 }*/

@@ -12,6 +12,6 @@ function audiofield_install() {
  */
 function audiofield_uninstall() {
   db_delete('variable')
-  ->condition('name', 'audiofield_%%', 'LIKE')
-  ->execute();
+    ->condition('name', 'audiofield_%%', 'LIKE')
+    ->execute();
 }

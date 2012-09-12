@@ -60,12 +60,15 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
   $settings = $instance['settings'];
 
   foreach (element_children($elements) as $delta) {
-      $elements[$delta]['#process'] = array('audiofield_field_widget_process');
+    $elements[$delta]['#process'] = array('audiofield_field_widget_process');
   }
   if ($field['cardinality'] == 1) {
     // If there's only one field, return it as delta 0.
     if (empty($elements[0]['#default_value']['fid'])) {
-      $elements[0]['#description'] = theme('file_upload_help', array('description' => $instance['description'], 'upload_validators' => $elements[0]['#upload_validators']));
+      $elements[0]['#description'] = theme('file_upload_help', array(
+        'description' => $instance['description'],
+        'upload_validators' => $elements[0]['#upload_validators']
+      ));
     }
   }
   else {
@@ -84,10 +87,10 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
   $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
   $element = file_managed_file_process($element, $form_state, $form);
   if ($fid && $element['#file']) {
-    $audiofile=file_create_url($element['#file']->uri);
+    $audiofile = file_create_url($element['#file']->uri);
     $info = pathinfo($audiofile);
     $op = $info['extension'];
-	$element['filename'] = array(
+    $element['filename'] = array(
       '#type' => 'markup',
       '#markup' => audiofield_get_player($audiofile, $op),
       '#weight' => -10,
@@ -113,13 +116,13 @@ function audiofield_field_formatter_info() {
 
 /**
  * Implements hook_field_formatter_view().
- TODO: Can implement playlists to group audios hold in multiple valued fields
+TODO: Can implement playlists to group audios hold in multiple valued fields
  */
 function audiofield_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $elements = array();
 
   foreach ($items as $delta => $item) {
-    $elements[] =  array( '#markup' => theme( 'audiofield_formatter_audiofield_embedded', array( 'file' => (object)$item )));    	
+    $elements[] = array('#markup' => theme('audiofield_formatter_audiofield_embedded', array('file' => (object) $item)));
   }
 
   return $elements;
