@@ -16,9 +16,17 @@ function audiofield_players() {
   $players['xspf_slim'] = array(
     'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/xspf_player_slim.swf",
     'name' => 'XSPF Slim Player',
-    'download_link' => 'http://sourceforge.net/projects/musicplayer/files/musicplayer/slim-player-0.2.3b/xspf_player_slim-correct-0.2.3.zip/download',
+    'download_link' => 'http://prdownloads.sourceforge.net/musicplayer/xspf_player_slim-correct-0.2.3.zip?download',
     'filetypes' => array('mp3'),
     'callback' => 'audiofield_xspf_slim',
+  );
+
+  $players['xspf_button'] = array(
+    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/button/musicplayer.swf",
+    'name' => 'XSPF Button Player',
+    'download_link' => 'http://prdownloads.sourceforge.net/musicplayer/button_player-0.1.zip?download',
+    'filetypes' => array('mp3'),
+    'callback' => 'audiofield_xspf_button',
   );
 
   //#1414398: Premium Beat players no longer available
@@ -103,6 +111,9 @@ function _audiofield_theme() {
     'audiofield_players_xspf_slim' => array(
       'variables' => array('player_path' => NULL, 'audio_file' => NULL),
     ),
+    'audiofield_players_xspf_button' => array(
+      'variables' => array('player_path' => NULL, 'audio_file' => NULL),
+    ),
     'audiofield_players_premium_beat_single_track' => array(
       'variables' => array('player_path' => NULL, 'audio_file' => NULL),
     ),
@@ -158,6 +169,25 @@ function theme_audiofield_players_xspf_slim($variables) {
   return '<object type="application/x-shockwave-flash" width="175" height="14"
           data="' . $player_path . '?song_url=' . $audio_file . '">
           <param name="movie" value="' . $player_path . '?song_url=' . $audio_file . '" />
+          <param name="wmode" value="transparent" />
+          </object>';
+}
+
+function audiofield_xspf_button($player_path, $audio_file) {
+  $variables = array(
+    'player_path' => $player_path,
+    'audio_file' => $audio_file,
+  );
+  return theme('audiofield_xspf_button', $variables);
+}
+
+function theme_audiofield_xspf_button($variables) {
+  $player_path = $variables['player_path'];
+  $audio_file = $variables['audio_file'];
+  return '<object type="application/x-shockwave-flash" width="17" height="17"
+          data="' . $player_path . '?song_url=' . $audio_file . '">
+          <param name="movie" value="' . $player_path . '?song_url=' . $audio_file . '" />
+          <param name="wmode" value="transparent" />
           </object>';
 }
 
