@@ -109,11 +109,11 @@ function audiofield_field_formatter_info() {
       'field types' => array('file'),
       'description' => t('Displays an audio player and optional download link.'),
     ),
-	'audiofield_nodownload' => array(
-     'label' => t('Audio player only'),
-     'field types' => array('file'),
-	 'description' => t('Displays only an audio player.'),
-     ),
+    'audiofield_nodownload' => array(
+      'label' => t('Audio player only'),
+      'field types' => array('file'),
+      'description' => t('Displays only an audio player.'),
+    ),
   );
 
   return $formatters;
@@ -129,12 +129,12 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
   switch ($display['type']) {
     case 'audiofield_embedded' :
       foreach ($items as $delta => $item) {
-        $elements[] =  array( '#markup' => theme('audiofield_formatter_audiofield_embedded', array( 'file' => (object)$item )));
+        $elements[] = array('#markup' => theme('audiofield_formatter_audiofield_embedded', array('file' => (object) $item)));
       }
       break;
     case 'audiofield_nodownload':
       foreach ($items as $delta => $item) {
-        $elements[] =  array( '#markup' => theme('audiofield_formatter_audiofield_nodownload', array( 'file' => (object)$item )));
+        $elements[] = array('#markup' => theme('audiofield_formatter_audiofield_nodownload', array('file' => (object) $item)));
       }
       break;
   }

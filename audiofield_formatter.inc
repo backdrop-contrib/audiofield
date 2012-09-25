@@ -39,7 +39,7 @@ function theme_audiofield_formatter_audiofield_nodownload($variables) {
     return '';
   }
 
-  $audiofile=file_create_url($file->uri);
+  $audiofile = file_create_url($file->uri);
   $info = pathinfo($audiofile);
   $op = $info['extension'];
   $output = audiofield_get_player($audiofile, $op);
