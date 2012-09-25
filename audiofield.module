@@ -105,6 +105,10 @@ function audiofield_theme() {
       'variables' => array('file' => NULL),
       'file' => 'audiofield_formatter.inc',
     ),
+	'audiofield_formatter_audiofield_nodownload' => array(
+      'variables' => array('file' => NULL),
+      'file' => 'audiofield_formatter.inc',
+    ),
   );
   $theme = array_merge($theme, _audiofield_theme());
   return $theme;

@@ -27,3 +27,22 @@ function theme_audiofield_formatter_audiofield_embedded($variables) {
 
   return $output;
 }
+
+/*
+ * Theme function for 'embedded' audio.
+ */
+function theme_audiofield_formatter_audiofield_nodownload($variables) {
+  global $user;
+  $file = $variables['file'];
+
+  if (!$file) {
+    return '';
+  }
+
+  $audiofile=file_create_url($file->uri);
+  $info = pathinfo($audiofile);
+  $op = $info['extension'];
+  $output = audiofield_get_player($audiofile, $op);
+
+  return $output;
+}

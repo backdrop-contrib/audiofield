@@ -68,6 +68,12 @@ return '<object><param name="autoplay" value="true" />
 }
 ?>
 
+DISPLAY FORMATTERS
+--------------------------------------------------------------------------------
+There are 2 display formaters:
+1. Audio player with download
+2. Audio player only
+
 MAINTAINERS
 --------------------------------------------------------------------------------
 Tamer Zoubi - <tamerzg@gmail.com>
