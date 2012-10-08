@@ -137,7 +137,7 @@ function audiofield_get_player($audio_url, $op) {
 function audiofield_form_field_ui_field_edit_form_alter(&$form, &$form_state) {
   $instance = $form['#instance'];
 
-  if ($instance['widget']['type'] == 'audiofield_widget') {
+  if ($instance['widget']['type'] == 'audiofield_widget' && $form['instance']['settings']['file_extensions']['#default_value'] == 'txt') {
     $form['instance']['settings']['file_extensions']['#default_value'] = 'mp3';
   }
 }

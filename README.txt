@@ -3,7 +3,7 @@ AUDIOFIELD.MODULE
 This module allows embedding an audio file in a CCK field
 This module is for adding new field that allows embedding an mp3 audio.
 
-In order to activate this module you have to get one of audio players from the following links
+This module will use the  Google Reader MP3 Player to play your audio files by default, but you may choose one of several other suppoted players:
 1. http://wpaudioplayer.com/download *Note make sure you should download the standalone edition
 2. http://prdownloads.sourceforge.net/musicplayer/xspf_player_slim-correct-0.2.3.zip?download
 3. http://prdownloads.sourceforge.net/musicplayer/button_player-0.1.zip?download

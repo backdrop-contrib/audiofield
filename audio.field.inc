@@ -86,6 +86,26 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
 function audiofield_field_widget_process($element, &$form_state, $form) {
   $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
   $element = file_managed_file_process($element, $form_state, $form);
+  
+  $item = $element['#value'];
+  $item['fid'] = $element['fid']['#value'];
+  $field = field_widget_field($element, $form_state);
+  $instance = field_widget_instance($element, $form_state);
+   // Add the display field if enabled.
+  if (!empty($field['settings']['display_field']) && $item['fid']) {
+    $element['display'] = array(
+      '#type' => empty($item['fid']) ? 'hidden' : 'checkbox',
+      '#title' => t('Include file in display'),
+      '#value' => isset($item['display']) ? $item['display'] : $field['settings']['display_default'],
+      '#attributes' => array('class' => array('file-display')),
+    );
+  }
+  else {
+    $element['display'] = array(
+      '#type' => 'hidden',
+      '#value' => '1',
+    );
+  }
   if ($fid && $element['#file']) {
     $audiofile = file_create_url($element['#file']->uri);
     $info = pathinfo($audiofile);
@@ -94,6 +114,18 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
       '#type' => 'markup',
       '#markup' => audiofield_get_player($audiofile, $op),
       '#weight' => -10,
+    );
+  }
+  
+  // Add the description field if enabled.
+  if (!empty($instance['settings']['description_field']) && $item['fid']) {
+    $element['description'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Description'),
+      '#value' => isset($item['description']) ? $item['description'] : '',
+      '#type' => variable_get('file_description_type', 'textfield'),
+      '#maxlength' => variable_get('file_description_length', 128),
+      '#description' => t('The description may be used as the label of the link to the file.'),
     );
   }
   return $element;
