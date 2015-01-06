@@ -163,7 +163,6 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
     case 'audiofield_nodownload':
       global $user;
       foreach ($items as $delta => $item) {
-        //$elements[] = array('#markup' => theme('audiofield_formatter_audiofield_embedded', array('file' => (object) $item)));
         $audiofile = file_create_url($item['uri']);
         $info = pathinfo($audiofile);
         $op = $info['extension'];
@@ -190,11 +189,6 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
         $elements[] = array('#markup' => audiofield_get_player($audiofile, $op, $options).$download_link);
       }
       break;
-   /* case 'audiofield_nodownload':
-      foreach ($items as $delta => $item) {
-        $elements[] = array('#markup' => theme('audiofield_formatter_audiofield_nodownload', array('file' => (object) $item)));
-      }
-      break;*/
   }
 
   return $elements;
