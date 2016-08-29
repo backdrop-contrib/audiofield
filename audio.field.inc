@@ -49,6 +49,29 @@ function audiofield_field_widget_info() {
 }
 
 /**
+ * Implements hook_field_widget_settings_form().
+ */
+function audiofield_field_widget_settings_form($field, $instance) {
+  $widget = $instance['widget'];
+  $settings = $widget['settings'];
+
+  $form['progress_indicator'] = array(
+    '#type' => 'radios',
+    '#title' => t('Progress indicator'),
+    '#options' => array(
+      'throbber' => t('Throbber'),
+      'bar' => t('Bar with progress meter'),
+    ),
+    '#default_value' => $settings['progress_indicator'],
+    '#description' => t('The throbber display does not show the status of uploads but takes up less space. The progress bar is helpful for monitoring progress on large uploads.'),
+    '#weight' => 16,
+    '#access' => file_progress_implementation(),
+  );
+
+  return $form;
+}
+
+/**
  * Implements hook_field_widget_form().
  */
 function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element) {
