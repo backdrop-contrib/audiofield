@@ -178,11 +178,11 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
         $download_link = '';
         if($display['type'] == 'audiofield_embedded') {
           if ($user->uid == $item['uid'] && user_access('download own audio files')) {
-            $download_link .= '<div class="audio-download"><b>Download:</b>' . theme('file_link', array('file' => (object) $item)) . '</div>';
+            $download_link .= '<div class="audio-download"><b>' . t('Download') . ':</b>' . theme('file_link', array('file' => (object) $item)) . '</div>';
           }
           elseif (user_access('download all audio files')) {
             //If user has permission to download all audio files, then display download link
-            $download_link .= '<div class="audio-download"><b>Download:</b>' . theme('file_link', array('file' => (object) $item)) . '</div>';
+            $download_link .= '<div class="audio-download"><b>' . t('Download') . ':</b>' . theme('file_link', array('file' => (object) $item)) . '</div>';
           }
         }
         $elements[] = array('#markup' => audiofield_get_player($audiofile, $op, $options).$download_link);
