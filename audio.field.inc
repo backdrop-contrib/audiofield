@@ -60,7 +60,7 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
   $settings = $instance['settings'];
 
   foreach (element_children($elements) as $delta) {
-    $elements[$delta]['#process'] = array('audiofield_field_widget_process');
+    $elements[$delta]['#process'] = array_merge(element_info_property('managed_file', '#process', array()), array('audiofield_field_widget_process'));
   }
   if ($field['cardinality'] == 1) {
     // If there's only one field, return it as delta 0.
@@ -85,7 +85,6 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
  */
 function audiofield_field_widget_process($element, &$form_state, $form) {
   $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
-  $element = file_managed_file_process($element, $form_state, $form);
   
   $item = $element['#value'];
   $item['fid'] = $element['fid']['#value'];

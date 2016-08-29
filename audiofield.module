@@ -188,7 +188,7 @@ function audiofield_field_conditional_state_settings_alter(&$settings) {
  *
  * This returns a list of widgets that are compatible with FileField Sources.
  */
-/*
+
 function audiofield_filefield_sources_widgets() {
   return array('audiofield_widget');
-}*/
+}
