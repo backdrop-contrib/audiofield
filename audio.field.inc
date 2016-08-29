@@ -108,7 +108,7 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
   }
   if ($fid && $element['#file']) {
     $audiofile = file_create_url($element['#file']->uri);
-    $info = pathinfo($audiofile);
+    $info = pathinfo($element['#file']->uri);
     $op = $info['extension'];
     $element['filename'] = array(
       '#type' => 'markup',
@@ -164,7 +164,7 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
       global $user;
       foreach ($items as $delta => $item) {
         $audiofile = file_create_url($item['uri']);
-        $info = pathinfo($audiofile);
+        $info = pathinfo($item['uri']);
         $op = $info['extension'];
         $options = array(
           'entity_type' => $entity_type,
