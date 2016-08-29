@@ -168,10 +168,10 @@ function audiofield_xspf_button($player_path, $audio_file) {
     'player_path' => $player_path,
     'audio_file' => $audio_file,
   );
-  return theme('audiofield_xspf_button', $variables);
+  return theme('audiofield_players_xspf_button', $variables);
 }
 
-function theme_audiofield_xspf_button($variables) {
+function theme_audiofield_players_xspf_button($variables) {
   $player_path = $variables['player_path'];
   $audio_file = $variables['audio_file'];
   return '<object type="application/x-shockwave-flash" width="17" height="17"
