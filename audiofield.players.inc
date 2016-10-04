@@ -5,6 +5,13 @@
 function audiofield_players() {
   $players = module_invoke_all('audiofield_players');
 
+  $players['html5'] = array(
+    'name' => 'HTML5 <audio>',
+    'filetypes' => array('mp3', 'wav', 'ogg'),
+    'local' => TRUE,
+    'callback' => 'audiofield_html5_audio',
+  );
+
   $players['wpaudioplayer'] = array(
     'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/audio-player/player.swf",
     'name' => 'WordPress Audio Player',
@@ -112,7 +119,11 @@ function _audiofield_theme() {
 /* Audio Callback Functions */
 
 function audiofield_embeddedplayer($audio_file) {
-  return '<embed height="15" src="' . $audio_file . '" autostart="false"></embed>';
+  return '<audio src="' . $audio_file . '" controls><embed height="15" src="' . $audio_file . '" autostart="false"></embed></audio>';
+}
+
+function audiofield_html5_audio($player_path, $audio_file) {
+  return '<audio src="' . $audio_file . '" controls></audio>';
 }
 
 function audiofield_wpaudioplayer($player_path, $audio_file) {
