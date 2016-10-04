@@ -4,7 +4,7 @@
  */
 
 function audiofield_install() {
-  variable_set('audiofield_audioplayer', 'google_reader'); //Set default player
+  variable_set('audiofield_audioplayer', 'html5'); //Set default player
 }
 
 /**
