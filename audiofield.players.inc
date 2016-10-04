@@ -72,13 +72,6 @@ function audiofield_players() {
     'callback' => 'audiofield_soundmanager2',
   );
 
-  $players['google_reader'] = array(
-    'path' => '',
-    'name' => 'Google Reader MP3 Player',
-    'filetypes' => array('mp3'),
-    'callback' => 'audiofield_googlereader',
-    'external' => TRUE,
-  );
     $players['jplayer'] = array(
       'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/jplayer/jquery.jplayer.min.js",
       'css' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/jplayer/jplayer.css",
@@ -112,9 +105,6 @@ function _audiofield_theme() {
     ),
     'audiofield_players_premium_beat_mini' => array(
       'variables' => array('player_path' => NULL, 'audio_file' => NULL),
-    ),
-    'audiofield_googlereader' => array(
-      'arguments' => array('player_path' => NULL, 'audio_file' => NULL),
     ),
   );
 }
@@ -292,19 +282,6 @@ if (module_exists('flowplayer')) {
     );
     return theme('flowplayer', $variables);
   }
-}
-
-function audiofield_googlereader($player_path, $audio_file) {
-  $variables = array(
-    'player_path' => $player_path,
-    'audio_file' => $audio_file,
-  );
-  return theme('audiofield_googlereader', $variables);
-}
-
-function theme_audiofield_googlereader($variables) {
-  $audio_file = $variables['audio_file'];
-  return '<embed type="application/x-shockwave-flash" flashvars="audioUrl=' . $audio_file . '" src="http://www.google.com/reader/ui/3523697345-audio-player.swf" width="400" height="27" quality="best"></embed>';
 }
 
 function audiofield_jplayer($player_path, $audio_file, $options) {
