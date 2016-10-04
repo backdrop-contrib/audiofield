@@ -62,7 +62,6 @@ function audiofield_players() {
   );
 
     $players['flowplayer'] = array(
-      'path' => drupal_get_path('module', 'flowplayer') . '/flowplayer/flowplayer.swf',
       'name' => 'Flowplayer',
       'download_link' => 'http://drupal.org/project/flowplayer',
       'filetypes' => array('mp3'),
