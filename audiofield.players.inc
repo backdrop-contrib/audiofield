@@ -61,15 +61,13 @@ function audiofield_players() {
     'callback' => 'audiofield_premium_beat_mini',
   );
   
-  if (module_exists('flowplayer')) {
 	$players['flowplayer'] = array(
       'name' => 'Flowplayer',
       'download_link' => 'http://drupal.org/project/flowplayer',
       'filetypes' => array('mp3'),
       'callback' => 'audiofield_flowplayer',
       'module' => 'flowplayer',
-    );  
-  }
+    );
 
 
   $players['soundmanager2'] = array(
