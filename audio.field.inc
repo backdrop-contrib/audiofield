@@ -142,7 +142,6 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
   // Add the description field if enabled.
   if (!empty($instance['settings']['description_field']) && $item['fid']) {
     $element['description'] = array(
-      '#type' => 'textfield',
       '#title' => t('Description'),
       '#value' => isset($item['description']) ? $item['description'] : '',
       '#type' => variable_get('file_description_type', 'textfield'),
