@@ -13,6 +13,7 @@ This module will use the  Google Reader MP3 Player to play your audio files by d
 7. Soundmanager2 http://www.schillmania.com/projects/soundmanager2/doc/download/
 
 Or install FlowPlayer module (http://drupal.org/project/flowplayer) to use Flowplayer.
+Or install jPlayer module (http://drupal.org/project/jplayer) to use jPlayer.
 Or use Google Reader player (already installed with the module).
 
 Once you got the above audio players you have to create a new folder called "player "at this
