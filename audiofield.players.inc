@@ -145,10 +145,11 @@ function theme_audiofield_players_wpaudioplayer($variables) {
                           </object>';
 }
 
-function audiofield_xspf_slim($player_path, $audio_file) {
+function audiofield_xspf_slim($player_path, $audio_file, $options) {
   $variables = array(
     'player_path' => $player_path,
     'audio_file' => $audio_file,
+    'song_title' => $options['items'][0]['filename'],
   );
   return theme('audiofield_players_xspf_slim', $variables);
 }
@@ -156,11 +157,13 @@ function audiofield_xspf_slim($player_path, $audio_file) {
 function theme_audiofield_players_xspf_slim($variables) {
   $player_path = $variables['player_path'];
   $audio_file = $variables['audio_file'];
+  $song_title = $variables['song_title'];
   return '<object type="application/x-shockwave-flash" width="175" height="14"
-          data="' . $player_path . '?song_url=' . $audio_file . '">
+          data="' . $player_path . '?song_url=' . $audio_file . '&song_title=' . $song_title . '">
           <param name="movie" value="' . $player_path . '?song_url=' . $audio_file . '" />
           <param name="wmode" value="transparent" />
-          </object>';
+          </object>
+          ';
 }
 
 function audiofield_xspf_button($player_path, $audio_file) {
