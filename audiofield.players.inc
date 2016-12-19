@@ -146,10 +146,16 @@ function theme_audiofield_players_wpaudioplayer($variables) {
 }
 
 function audiofield_xspf_slim($player_path, $audio_file, $options) {
+	$song_title = "XSPF Slim Music Player";
+	if(!empty($options)) {
+		if(!empty($options['items'][0]['filename'])) {
+			$song_title = $options['items'][0]['filename'];	
+		}
+	}
   $variables = array(
     'player_path' => $player_path,
     'audio_file' => $audio_file,
-    'song_title' => $options['items'][0]['filename'],
+    'song_title' => $song_title,
   );
   return theme('audiofield_players_xspf_slim', $variables);
 }
