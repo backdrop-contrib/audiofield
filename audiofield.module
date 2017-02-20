@@ -199,3 +199,15 @@ function audiofield_field_conditional_state_settings_alter(&$settings) {
 function audiofield_filefield_sources_widgets() {
   return array('audiofield_widget');
 }
+
+/**
+ * Implements hook_autoload_info().
+ */
+function audiofield_autoload_info() {
+  return array(
+//    -files[] = audiofield.install
+//    -files[] = audiofield.module
+//    -files[] = audiofield_formatter.inc
+//    -files[] = audiofield_widget.inc
+  );
+}
