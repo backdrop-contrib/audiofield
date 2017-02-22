@@ -11,8 +11,9 @@ Installation
 - Install this module using the official Backdrop CMS instructions at
   https://backdropcms.org/guide/modules
 
-- Visit the configuration page under Administration > Configuration > Media >
-  AudioField (admin/config/media/audiofield) to set the audio player directory.
+- (optional) Visit the configuration page under Administration > Configuration >
+  Media > AudioField (admin/config/media/audiofield) to set the audio player
+  directory.
 
 - (optional) Add audio players. This module will use the Google Reader MP3
   Player by default, but there are several other supported players:
@@ -52,11 +53,11 @@ Installation
   The Premium Beat single track mini player should be at:
   /sites/all/libraries/player/LWMusicPlayer.swf
 
-- Put any mp3 audio file at "\sites\all\libraries\player\" and name it
-  Sample_Track.mp3 to have the ability to test audio players before choosing the
-  default audio player.
+- (optional) Put any mp3 audio file at "\sites\all\libraries\player\" and name
+  it Sample_Track.mp3 to have the ability to test audio players before choosing
+  the default audio player.
 
-- Choose the audio player from the configuration page.
+- (optional) Choose the audio player from the configuration page.
 
 Documentation
 -------------
