@@ -53,7 +53,8 @@ Installation
   The Premium Beat single track mini player should be at:
   /sites/all/libraries/player/LWMusicPlayer.swf
 
-- (optional) Choose the audio player from the configuration page.
+- (optional) To use an alternate player that was added, choose the audio player
+  from the configuration page.
 
 Documentation
 -------------
