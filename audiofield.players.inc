@@ -4,6 +4,7 @@
  */
 function audiofield_players() {
   $players = module_invoke_all('audiofield_players');
+  $players_dir = config_get('audiofield.settings', 'players_dir');
 
   $players['html5'] = array(
     'name' => 'HTML5 <audio>',
@@ -13,7 +14,7 @@ function audiofield_players() {
   );
 
   $players['wpaudioplayer'] = array(
-    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/audio-player/player.swf",
+    'path' => $players_dir . "/audio-player/player.swf",
     'name' => 'WordPress Audio Player',
     'download_link' => 'http://wpaudioplayer.com/download',
     'filetypes' => array('mp3'),
@@ -21,7 +22,7 @@ function audiofield_players() {
   );
 
   $players['xspf_slim'] = array(
-    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/xspf_player_slim.swf",
+    'path' => $players_dir . "/xspf_player_slim.swf",
     'name' => 'XSPF Slim Player',
     'download_link' => 'http://prdownloads.sourceforge.net/musicplayer/xspf_player_slim-correct-0.2.3.zip?download',
     'filetypes' => array('mp3'),
@@ -29,7 +30,7 @@ function audiofield_players() {
   );
 
   $players['xspf_button'] = array(
-    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/button/musicplayer.swf",
+    'path' => $players_dir . "/button/musicplayer.swf",
     'name' => 'XSPF Button Player',
     'download_link' => 'http://prdownloads.sourceforge.net/musicplayer/button_player-0.1.zip?download',
     'filetypes' => array('mp3'),
@@ -38,7 +39,7 @@ function audiofield_players() {
 
   //#1414398: Premium Beat players no longer available
   $players['premium_beat_single_track'] = array(
-    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/playerSinglePackage/playerSingle.swf",
+    'path' => $players_dir . "/playerSinglePackage/playerSingle.swf",
     'name' => 'Premium Beat Single Player',
     //'download_link' => 'http://www.premiumbeat.com/flash_resources/free_flash_music_player/single_track_flash_mp3_player.php',
     'filetypes' => array('mp3'),
@@ -46,7 +47,7 @@ function audiofield_players() {
   );
 
   $players['premium_beat_thin'] = array(
-    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/OriginalThinMusicPlayer.swf",
+    'path' => $players_dir . "/OriginalThinMusicPlayer.swf",
     'name' => 'Premium Beat Thin Player',
     //'download_link' => 'http://www.premiumbeat.com/flash_music_players/original/thin/',
     'filetypes' => array('mp3'),
@@ -54,7 +55,7 @@ function audiofield_players() {
   );
 
   $players['premium_beat_mini'] = array(
-    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/LWMusicPlayer.swf",
+    'path' => $players_dir . "/LWMusicPlayer.swf",
     'name' => 'Premium Beat Mini Player',
     //'download_link' => 'http://www.premiumbeat.com/flash_music_players/original/mini/',
     'filetypes' => array('mp3'),
@@ -71,7 +72,7 @@ function audiofield_players() {
 
 
   $players['soundmanager2'] = array(
-    'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/soundmanager2",
+    'path' => $players_dir . "/soundmanager2",
     'name' => 'SoundManager2 360',
     'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
     'filetypes' => array('mp3', 'wav'),
@@ -79,8 +80,8 @@ function audiofield_players() {
   );
 
     $players['jplayer'] = array(
-      'path' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/jplayer/jquery.jplayer.min.js",
-      'css' => variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/jplayer/jplayer.css",
+      'path' => $players_dir . "/jplayer/jquery.jplayer.min.js",
+      'css' => $players_dir . "/jplayer/jplayer.css",
       'name' => 'jPlayer',
       'download_link' => 'https://www.drupal.org/project/jplayer',
       'module' => 'jplayer',
@@ -249,7 +250,7 @@ function audiofield_soundmanager2($player_path, $audio_file) {
   }
   else {
     $instanceIndex += 1;
-    $player_base_path = variable_get('audiofield_players_dir', 'sites/all/libraries/player') . "/soundmanager2";
+    $player_base_path = config_get('audiofield.settings', 'players_dir') . "/soundmanager2";
     $ie_js = array(
       '#type' => 'markup',
       '#markup' => '<!--[if IE]><script type="text/javascript" src="' . $player_path . '/demo/360-player/script/excanvas.js"></script><![endif]-->',

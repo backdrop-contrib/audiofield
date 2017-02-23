@@ -3,10 +3,6 @@
  * Implementation of hook_install().
  */
 
-function audiofield_install() {
-  variable_set('audiofield_audioplayer', 'html5'); //Set default player
-}
-
 /**
  * Implementation of hook_uninstall().
  */

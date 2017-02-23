@@ -55,13 +55,15 @@ function audiofield_admin_settings_form() {
     }
   }
 
+  $config = config('audiofield.settings');
+
   //MP3 Players list
   if (!empty($players['mp3'])) {
     $form['audiofield_audioplayer'] = array(
       '#type' => 'radios',
       '#title' => t('MP3 Audio Players'),
       '#options' => $players['mp3'],
-      '#default_value' => variable_get('audiofield_audioplayer', 'google_reader'),
+      '#default_value' => $config->get('audioplayer'),
     );
     unset($players['mp3']);
   }
@@ -72,7 +74,7 @@ function audiofield_admin_settings_form() {
       '#type' => 'radios',
       '#title' => check_plain($filetype . ' ' . t('Audio Players')),
       '#options' => $type_player,
-      '#default_value' => variable_get('audiofield_audioplayer_' . $filetype, 0),
+      '#default_value' => $config->get('audioplayer_' . $filetype),
     );
   }
 
@@ -80,7 +82,7 @@ function audiofield_admin_settings_form() {
     '#type' => 'textfield',
     '#title' => t('Audio Players Directory'),
     '#description' => t('Download and extract audio players in this directory'),
-    '#default_value' => variable_get('audiofield_players_dir', 'sites/all/libraries/player'),
+    '#default_value' => $config->get('players_dir'),
   );
 
   if (!empty($download_players)) {
@@ -91,7 +93,14 @@ function audiofield_admin_settings_form() {
     );
   }
 
-  return system_settings_form($form);
+  // Add a submit button.
+  $form['actions']['#type'] = 'actions';
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configuration'),
+  );
+
+  return $form;
 }
 
 
@@ -111,8 +120,8 @@ function audiofield_get_player($audio_url, $op, $options = array()) {
   //Lets convert $op to lowercase
   $op = strtolower($op);
   $audio_players = audiofield_players();
-  $variable_name = 'audiofield_audioplayer' . ($op == 'mp3' ? '' : "_$op");
-  $player_id = variable_get($variable_name, '');
+  $variable_name = 'audioplayer' . ($op == 'mp3' ? '' : "_$op");
+  $player_id = config_get('audiofield.settings', $variable_name);
   $player = isset($audio_players[$player_id]) ? $audio_players[$player_id] : NULL;
 
   if (empty($player)) {
@@ -198,4 +207,17 @@ function audiofield_field_conditional_state_settings_alter(&$settings) {
 
 function audiofield_filefield_sources_widgets() {
   return array('audiofield_widget');
+}
+
+/**
+ * Submit handler for module_settings_form().
+ */
+function audiofield_admin_settings_form_submit($form, &$form_state) {
+  $config = config('audiofield.settings');
+  $config->set('audioplayer', $form_state['values']['audiofield_audioplayer']);
+  $config->set('audioplayer_wav', $form_state['values']['audiofield_audioplayer_wav']);
+  $config->set('audioplayer_ogg', $form_state['values']['audiofield_audioplayer_ogg']);
+  $config->set('players_dir', $form_state['values']['audiofield_players_dir']);
+  $config->save();
+  drupal_set_message(t('The AudioField configuration options have been saved.'));
 }
