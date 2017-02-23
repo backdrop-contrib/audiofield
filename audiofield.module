@@ -11,7 +11,7 @@ function audiofield_menu() {
   $items['admin/config/media/audiofield'] = array(
     'title' => 'Audio Field',
     'description' => 'Configure Audiofield.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('audiofield_admin_settings_form'),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
@@ -219,7 +219,7 @@ function audiofield_admin_settings_form_submit($form, &$form_state) {
   $config->set('audioplayer_ogg', $form_state['values']['audiofield_audioplayer_ogg']);
   $config->set('players_dir', $form_state['values']['audiofield_players_dir']);
   $config->save();
-  drupal_set_message(t('The AudioField configuration options have been saved.'));
+  backdrop_set_message(t('The AudioField configuration options have been saved.'));
 }
 
 /**
