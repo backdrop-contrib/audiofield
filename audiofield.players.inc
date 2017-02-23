@@ -255,14 +255,14 @@ function audiofield_soundmanager2($player_path, $audio_file) {
       '#type' => 'markup',
       '#markup' => '<!--[if IE]><script type="text/javascript" src="' . $player_path . '/demo/360-player/script/excanvas.js"></script><![endif]-->',
     );
-    drupal_add_html_head($ie_js, 'audiofield');
+    backdrop_add_html_head($ie_js, 'audiofield');
 
-    drupal_add_js($player_base_path . '/script/soundmanager2.js', array('weight' => 0));
+    backdrop_add_js($player_base_path . '/script/soundmanager2.js', array('weight' => 0));
 
     //360 viewer
-    drupal_add_js($player_base_path . '/demo/360-player/script/berniecode-animator.js', array('weight' => 1));
-    drupal_add_js($player_base_path . '/demo/360-player/script/360player.js', array('weight' => 1));
-    drupal_add_css($player_base_path . '/demo/360-player/360player.css');
+    backdrop_add_js($player_base_path . '/demo/360-player/script/berniecode-animator.js', array('weight' => 1));
+    backdrop_add_js($player_base_path . '/demo/360-player/script/360player.js', array('weight' => 1));
+    backdrop_add_css($player_base_path . '/demo/360-player/360player.css');
 
     return '
     	<div id="sm2-container-real" class="ui360">
