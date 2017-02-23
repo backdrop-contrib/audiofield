@@ -120,8 +120,8 @@ function audiofield_get_player($audio_url, $op, $options = array()) {
   //Lets convert $op to lowercase
   $op = strtolower($op);
   $audio_players = audiofield_players();
-  $variable_name = 'audioplayer' . ($op == 'mp3' ? '' : "_$op");
-  $player_id = config_get('audiofield.settings', $variable_name);
+  $file_type_setting_name = 'audioplayer' . ($op == 'mp3' ? '' : "_$op");
+  $player_id = config_get('audiofield.settings', $file_type_setting_name);
   $player = isset($audio_players[$player_id]) ? $audio_players[$player_id] : NULL;
 
   if (empty($player)) {
