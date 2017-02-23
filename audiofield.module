@@ -221,3 +221,14 @@ function audiofield_admin_settings_form_submit($form, &$form_state) {
   $config->save();
   drupal_set_message(t('The AudioField configuration options have been saved.'));
 }
+
+/**
+ * Implements hook_config_info().
+ */
+function audiofield_config_info() {
+  $prefixes['audiofield.settings'] = array(
+    'label' => t('Audiofield settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
+}
