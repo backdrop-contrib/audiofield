@@ -1,0 +1,7 @@
+{
+    "_config_name": "audiofield.settings",
+    "audioplayer": "html5",
+    "audioplayer_wav": "html5",
+    "audioplayer_ogg": "html5",
+    "players_dir": "sites/all/libraries/player"
+}
