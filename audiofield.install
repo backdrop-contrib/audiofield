@@ -1,13 +1,39 @@
 <?php
 /**
- * Implementation of hook_install().
+ * @file
+ * Install, update and uninstall functions for the Audiofield module.
  */
 
 /**
- * Implementation of hook_uninstall().
+ * @defgroup updates-7.x-to-1.x Updates from 7.x to 1.x
+ * @{
+ * Update functions from Drupal 7.x to Backdrop CMS 1.x.
  */
-function audiofield_uninstall() {
-  db_delete('variable')
-    ->condition('name', 'audiofield_%%', 'LIKE')
-    ->execute();
+
+/**
+ * Move settings from variables to config.
+ */
+function audiofield_update_1000() {
+  // These are hardcoded here. But if another module added more types, this
+  // should be more dynamic, using a loop.
+  // @see audiofield_admin_settings_form()
+
+  // Migrate variables to config.
+  $config = config('audiofield.settings');
+  $config->set('audioplayer', update_variable_get('audiofield_audioplayer', 'html5'));
+  $config->set('audioplayer_wav', update_variable_get('audiofield_audioplayer_wav', 'html5'));
+  $config->set('audioplayer_ogg', update_variable_get('audiofield_audioplayer_ogg', 'html5'));
+  $config->set('players_dir', update_variable_get('audiofield_players_dir', 'sites/all/libraries/player'));
+  $config->save();
+
+  // Delete variables.
+  update_variable_del('audiofield_audioplayer');
+  update_variable_del('audiofield_audioplayer_wav');
+  update_variable_del('audiofield_audioplayer_ogg');
+  update_variable_del('audiofield_players_dir');
 }
+
+/**
+ * @} End of "defgroup updates-7.x-to-1.x"
+ * The next series of updates should start at 2000.
+ */
