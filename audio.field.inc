@@ -144,8 +144,8 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
     $element['description'] = array(
       '#title' => t('Description'),
       '#value' => isset($item['description']) ? $item['description'] : '',
-      '#type' => variable_get('file_description_type', 'textfield'),
-      '#maxlength' => variable_get('file_description_length', 128),
+      '#type' => 'textfield',
+      '#maxlength' => 500,
       '#description' => t('The description may be used as the label of the link to the file.'),
     );
   }
