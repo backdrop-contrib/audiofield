@@ -23,7 +23,13 @@ function audiofield_update_1000() {
   $config->set('audioplayer', update_variable_get('audiofield_audioplayer', 'html5'));
   $config->set('audioplayer_wav', update_variable_get('audiofield_audioplayer_wav', 'html5'));
   $config->set('audioplayer_ogg', update_variable_get('audiofield_audioplayer_ogg', 'html5'));
-  $config->set('players_dir', update_variable_get('audiofield_players_dir', 'sites/all/libraries/player'));
+
+  $new_default_players_dir = '/libraries/player';
+  $previous_players_dir = update_variable_get('audiofield_players_dir', $new_default_players_dir);
+  if ($previous_players_dir != $new_default_players_dir) {
+    // @todo Move players. Set message that default location changed.
+  }
+  $config->set('players_dir', $new_default_players_dir);
   $config->save();
 
   // Delete variables.
