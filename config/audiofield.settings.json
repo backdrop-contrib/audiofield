@@ -3,5 +3,5 @@
     "audioplayer": "html5",
     "audioplayer_wav": "html5",
     "audioplayer_ogg": "html5",
-    "players_dir": "sites/all/libraries/player"
+    "players_dir": "libraries/player"
 }
