@@ -4,7 +4,7 @@
  */
 function audiofield_players() {
   $players = module_invoke_all('audiofield_players');
-  $players_dir = config_get('audiofield.settings', 'players_dir');
+  $players_dir = BACKDROP_ROOT . config_get('audiofield.settings', 'players_dir');
 
   $players['html5'] = array(
     'name' => 'HTML5 <audio>',
@@ -61,7 +61,7 @@ function audiofield_players() {
     'filetypes' => array('mp3'),
     'callback' => 'audiofield_premium_beat_mini',
   );
-  
+
 	$players['flowplayer'] = array(
       'name' => 'Flowplayer',
       'download_link' => 'http://drupal.org/project/flowplayer',
@@ -150,7 +150,7 @@ function audiofield_xspf_slim($player_path, $audio_file, $options) {
 	$song_title = "XSPF Slim Music Player";
 	if(!empty($options)) {
 		if(!empty($options['items'][0]['filename'])) {
-			$song_title = $options['items'][0]['filename'];	
+			$song_title = $options['items'][0]['filename'];
 		}
 	}
   $variables = array(
